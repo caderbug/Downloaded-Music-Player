@@ -1,7 +1,10 @@
 # Downloaded Music Player
 
 ### Project Description
-- TBA
+- a phone app that is able to play music that is locally
+downloaded to a phone. It will contain features commonly seen in a typical music player, with
+various additional features.
+
 
 ### Group Members & GitHub ID's:
 - Collins Pearson - collinspearson

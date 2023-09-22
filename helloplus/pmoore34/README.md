@@ -11,7 +11,7 @@ The app displays:
 
 ## How to run it
 
-I followed this tutorial to get everything set up onto my computer. [Music Link] (https://docs.expo.dev/build/setup/) And then I followed this tutorial to get my server start to be able to run my code. [Music Link] (https://docs.expo.dev/get-started/create-a-project/)  I tested mine through the web browser. Also had to make sure Node.js was installed and up to date to get it to work.
+I followed this tutorial to get everything set up onto my computer. [Link] (https://docs.expo.dev/build/setup/) And then I followed this tutorial to get my server start to be able to run my code. [Link] (https://docs.expo.dev/get-started/create-a-project/)  I tested mine through the web browser. Also had to make sure Node.js was installed and up to date to get it to work.
 
 ## Technology used for Project
 

@@ -11,7 +11,6 @@ import * as React from 'react';
 import {useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import SoundPlayer from 'react-native-sound-player'
 
 const Stack = createNativeStackNavigator();
 const Separator = () => <View style={styles.separator} />;

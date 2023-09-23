@@ -9,7 +9,7 @@ This app has a main landing screen with a title and a button that brings you to 
 - Install the latest version of Node.js
   - https://nodejs.org/en/download
   - Comes with npm/npx.
-- Install React Native
+- Set up a React Native project
   - https://reactnative.dev/docs/environment-setup
   - Can create own project following the above tutorial and transfer the files over. 
 - Install Expo Go

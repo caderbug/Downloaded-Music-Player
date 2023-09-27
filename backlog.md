@@ -1,7 +1,6 @@
 # Initial Product Backlog
-## Product Name
-Downloaded Music Player
 ## Product Overview
+Product Name: Downloaded Music Player
 The program to be developed would be a phone app that is able to play music that is locally downloaded to a phone. It will contain features commonly seen in a typical music player, with various additional features.
 ## Backlog Items
 1. **Gather Music**: The program should be able to find all the audio files recognized as music on the device
@@ -19,7 +18,7 @@ The program to be developed would be a phone app that is able to play music that
 
 # Design Ideas
 ## Tabs
-The app should have 3 tabs at the bottom:
+The app should have 4 tabs at the bottom:
 1. Library: This is where the user's music would be pooled, and it could be filtered and sorted however the user chooses 
 2. Audio Editor: This would be a tab for simple file edits, such as cutting out portions of the audio file or raising the volume of the audio file
 3. Explore: At the top, users would be able to search for songs or artists, which would link to third-party services for purchasing music. At the bottom, music would be recommended to the user based on their listening tastes

@@ -20,7 +20,7 @@ The program to be developed would be a phone app that is able to play music that
 # Design Ideas
 ## Tabs
 The app should have 3 tabs at the bottom:
-1. Library: This is where the user's music would be pooled, and it could be filtered and sorted however the user chooses
-a
+1. Library: This is where the user's music would be pooled, and it could be filtered and sorted however the user chooses 
 2. Audio Editor: This would be a tab for simple file edits, such as cutting out portions of the audio file or raising the volume of the audio file
 3. Explore: At the top, users would be able to search for songs or artists, which would link to third-party services for purchasing music. At the bottom, music would be recommended to the user based on their listening tastes
+4. Account: This is where users could create an account and save/load their data to/from a server

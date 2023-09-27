@@ -6,7 +6,7 @@ The program to be developed would be a phone app that is able to play music that
 ## Backlog Items
 1. **Gather Music**: The program should be able to find all the audio files recognized as music on the device
 2. **Browse Library**: The program should display and sort the audio based on its metadata so that users can find and select it
-3.   a
+- a.
 4. **Basic Player Interactions**: Users should be able to play, pause, rewind, fast forward, skip, etc. music that they find from the displayed sections of music
 5. **Playlists & Saving Playlist Orders**: Users should be able to create playlists that can be played and shuffled, and if users find an ordering of the songs in the playlist that they like, they should be able to save it 
 6. **Altering Music**: There should be a simple in-app editor for cutting sections out of audio files, and amplifying the volume of the audio file. Users should also be able to make copies of audio files.

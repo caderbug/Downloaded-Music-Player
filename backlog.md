@@ -17,9 +17,10 @@ The program to be developed would be a phone app that is able to play music that
 12. **Creating an Account**: While not necessary, users should be able to make an account that their data can be synced to
 13. **Saving/Loading Data to/from Account**: Users should be able to save things such as their playlists and playlist orders to their account, but not the songs directly. The user can then load that information onto a new device and it will attempt to make it work with the audio files on that new device.
 
-# Design
+# Design Ideas
 ## Tabs
-The app should have 4 tabs at the bottom:
+The app should have 3 tabs at the bottom:
 1. Library: This is where the user's music would be pooled, and it could be filtered and sorted however the user chooses
+a
 2. Audio Editor: This would be a tab for simple file edits, such as cutting out portions of the audio file or raising the volume of the audio file
 3. Explore: At the top, users would be able to search for songs or artists, which would link to third-party services for purchasing music. At the bottom, music would be recommended to the user based on their listening tastes

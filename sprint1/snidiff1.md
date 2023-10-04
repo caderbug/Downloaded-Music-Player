@@ -4,10 +4,10 @@ Skye Nidiffer - GH ID: nidif - Downloaded Music Player
 
 ### What you planned to do
 (Give a short bulleted list of the items you planned to do for this sprint. Include the github issue number and link to the issue)
-- Audio Playback
-- Play and Pause UI
-- Player Information (display title, artist, length)
-- Implement Different Tabs (UI buttons only, separate pages will be linked later)
+- Audio Playback (issue #6: https://github.com/utk-cs340-fall23/DownloadedMusicPlayer/issues/6)
+- Play and Pause UI (issue #7: https://github.com/utk-cs340-fall23/DownloadedMusicPlayer/issues/7)
+- Player Information (display title, artist, length) (issue #8: https://github.com/utk-cs340-fall23/DownloadedMusicPlayer/issues/8)
+- Implement Different Tabs (UI buttons only, separate pages will be linked later) (issue #11: https://github.com/utk-cs340-fall23/DownloadedMusicPlayer/issues/11)
 
 ### What you did not do
 (Give a short bulleted list of the items that you planned to do, but did not accomplish)

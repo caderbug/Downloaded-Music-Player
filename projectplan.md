@@ -23,6 +23,12 @@ The program to be developed would be a phone app that is able to play music that
 - There should be a filter button to only show songs from a specific artist/genre/album
 - There should be a sort priority option, letting the user choose the main way the library is sorted (like if songs should be separated by artist name in alphabetical order, or if songs should be sorted by song title in alphabetical order)
 - There should be some way for the user's preferences to save locally (could be in a json file or something, but if anyone has an alternate method feel free to do that)
+- Audio Playback
+- Play and Pause UI
+- Player Information
+- Audio Editor Tab UI
+- Find and Import Audio Manipulation library
+- Implement Different Tabs
 
 ## Design Ideas
 ### Tabs

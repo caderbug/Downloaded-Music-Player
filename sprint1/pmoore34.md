@@ -6,7 +6,6 @@ Peyton Moore, caderbug, DownloadedMusicPlayer
 - Find and Import Audio Manipulation(issue [#10](https://github.com/utk-cs340-fall23/DownloadedMusicPlayer/issues/10))
 
 ## What you did not do
--Implement Audio Editing
 
 ## What problems you encountered
 

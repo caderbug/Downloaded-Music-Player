@@ -1,3 +1,6 @@
+// Note: these functions haven't been merged with the UI yet, so there was nowhere to commit to during the sprint.
+// But the code I wrote is still provided here
+
 function get_songs(dst_list, src_list, by, name){
 	var index = 0;
 	for(let i = 0; i < Object.keys(src_list).length; i++){

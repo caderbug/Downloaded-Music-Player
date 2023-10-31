@@ -38,3 +38,32 @@ export function exportPreferences(dir, songs) {
     });
     
 }
+
+// Function to import user preferences from a file
+export function importPreferences(dir, callback) {
+    const baseDir = path.join(__dirname, dir);
+    const fileName = path.join(baseDir, 'preferences.json');
+
+    // Check if the file exists
+    fs.access(fileName, fs.constants.F_OK, (err) => {
+        if (err) {
+            console.error(`File ${fileName} does not exist.`);
+            return;
+        }
+
+        // Read the file
+        fs.readFile(fileName, 'utf8', (err, data) => {
+            if (err) {
+                console.error('Error reading JSON file:', err);
+                return;
+            }
+
+            try {
+                const preferences = JSON.parse(data);
+                callback(preferences);
+            } catch (jsonError) {
+                console.error('Error parsing JSON:', jsonError);
+            }
+        });
+    });
+}

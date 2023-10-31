@@ -1,4 +1,4 @@
-import { exportPreferences } from './preferences.mjs';
+import { exportPreferences, importPreferences } from './preferences.mjs';
 import React from 'react';
 import { View } from 'react-native';
 
@@ -15,6 +15,9 @@ const folderButton = ({ onPress }) => (
 const exportButton = ({ onPress }) => (
   // ...
 );
+const importButton = ({ onPress }) => (
+  // ...
+);
 
 
 // Base for dealing with react app button presses
@@ -22,6 +25,24 @@ const App = () => {
     // Handle folder addition
     const handleButtonPress = () => {
         addFolder(dir);
+        alert('Button pressed!');
+    };
+
+    return (
+        <View>
+            <folderButton onPress={handleButtonPress} />
+        </View>
+    );
+
+    // Handle folder search
+    const handleButtonPress = () => {
+        // Iterate through the dictionary of folders and search for MP3s in each.
+        for (const folderName in folders) {
+            if (folders.hasOwnProperty(folderName)) {
+                const folderPath = folders[folderName];
+                searchForMP3s(folderPath, folderName);
+            }
+        }
         alert('Button pressed!');
     };
 
@@ -43,4 +64,37 @@ const App = () => {
       <exportButton onPress={handleButtonPress} />
     </View>
   );
+
+  // Handle Import Preferences
+    const handleButtonPress = () => {
+        importPreferences(dir, library);
+        alert('Button pressed!');
+    };
+
+  return (
+    <View>
+      <importButton onPress={handleButtonPress} />
+    </View>
+  );
 };
+
+// Function to recursively search for MP3 files in a folder.
+function searchForMP3s(dir, folderName) {
+    const files = fs.readdirSync(dir);
+
+    files.forEach((file) => {
+        const filePath = path.join(dir, file);
+
+    if (fs.statSync(filePath).isDirectory()) {
+        // If it's a directory, recursively search it.
+        searchForMP3s(filePath, folderName);
+    } else {
+        // Check if the file is an MP3.
+        if (path.extname(filePath) === '.mp3') {
+            // Add the MP3 file to the dictionary using the folder name and file name as keys.
+            mp3Dictionary[folderName] = mp3Dictionary[folderName] || [];
+            mp3Dictionary[folderName].push(filePath);
+        }
+    }
+  });
+}

@@ -67,7 +67,7 @@ const App = () => {
 
   // Handle Import Preferences
     const handleButtonPress = () => {
-        importPreferences(dir, library);
+        importPreferences(dir, handleImportedPreferences);
         alert('Button pressed!');
     };
 
@@ -97,4 +97,14 @@ function searchForMP3s(dir, folderName) {
         }
     }
   });
+}
+
+// Function to handle imported preferences
+function handleImportedPreferences(preferences) {
+    // Check if preferences are valid
+    if (preferences && Array.isArray(preferences)) {
+        // You can now use the preferences as needed
+    } else {
+        console.error('Invalid preferences data.');
+    }
 }

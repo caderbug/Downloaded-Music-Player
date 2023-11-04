@@ -4,17 +4,15 @@ import {
   View,
   Button,
   StyleSheet,
-  Image, 
   TextInput,
-  Alert,
-  SafeAreaView,
-  ActivityIndicator,
+  TouchableOpacity,
+  ImageBackground
 } from 'react-native';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Audio } from 'expo-av';
 
 const Stack = createNativeStackNavigator();
 const Separator = () => <View style={styles.separator} />;
@@ -76,9 +74,29 @@ const TitleScreen = ({navigation}) => {
 
 //library/player page goes here... placeholder for now
 const LibraryScreen = ({navigation}) => {
-  //define functions/vars up here.. test
-  const [display, showDisplay] = useState(false);
+  //define functions/vars up here
+  //for audio playback...
+  const [sound, setSound] = React.useState();
 
+  async function playSound() {
+    console.log('Loading Sound');
+    const { sound } = await Audio.Sound.createAsync( require('./assets/track.mp3'));
+    setSound(sound);
+
+    console.log('Playing Sound');
+    await sound.playAsync();
+  }
+
+  React.useEffect(() => {
+    return sound
+      ? () => {
+          console.log('Unloading Sound');
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [sound]);
+
+  //has working play button
   return (
    <View style={styles.screensize}>
      <Text style={styles.paragraph}>
@@ -86,19 +104,16 @@ const LibraryScreen = ({navigation}) => {
      </Text>
      <Separator />
      <Text style={styles.paragraph}>
-       Play/Pause button assets. 
+       Press play button to test audio. 
      </Text>
-  
-      <Image
-        style={styles.playbtn}
-        source={require('./assets/play.png')}
-      />
-      <Image
-        style={styles.playbtn}
-        source={require('./assets/pause.png')}
-      />
 
-      //tabs... issue #11 done for now
+      <TouchableOpacity onPress={playSound}>
+        <ImageBackground source={require("./assets/play.png")} style={styles.playbtn}>
+          <Text style={styles.title}>Press Me</Text>
+        </ImageBackground>
+      </TouchableOpacity>
+
+
       <View style={styles.libbtn}>
         <Button
           title="Library"
@@ -335,9 +350,11 @@ const styles = StyleSheet.create({
     width: 105,
     position: 'absolute',
     bottom: 0,
+  },
+  title: {
+    opacity: 0,
   }
 });
 
 export default MusicPlayerApp;
-
 AppRegistry.registerComponent('MusicPlayerApp', () => MusicPlayerApp);

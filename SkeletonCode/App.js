@@ -88,7 +88,7 @@ const LibraryScreen = ({navigation}) => {
      <Text style={styles.paragraph}>
        Play/Pause button assets. 
      </Text>
-
+  
       <Image
         style={styles.playbtn}
         source={require('./assets/play.png')}
@@ -97,6 +97,8 @@ const LibraryScreen = ({navigation}) => {
         style={styles.playbtn}
         source={require('./assets/pause.png')}
       />
+
+      //tabs... issue #11 done for now
       <View style={styles.libbtn}>
         <Button
           title="Library"

@@ -10,7 +10,7 @@ Catch up from Sprint 1's issues...
 - Implement Different Tabs (UI buttons only, separate pages will be linked later) (issue https://github.com/utk-cs340-fall23/DownloadedMusicPlayer/issues/11)
 
 ### What you did not do
-- Wanted to add a bar for song length/current time in song to the track player info UI, but instead just put space to where it could display time in text format (eg. 00:00/5:12)
+- Wanted to add a bar for song length/current time in song to the track player info UI, but instead just put space to where it could display time in text format (eg. 00:00/05:12)
 - Aside from that, the playback, basic player UI functions, and tabs are doing what they need to. Further polish could be applied in the future.
 
 ### What problems you encountered

@@ -6,7 +6,8 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  ImageBackground
+  ImageBackground, 
+  Image
 } from 'react-native';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
@@ -114,7 +115,7 @@ const LibraryScreen = ({navigation}) => {
      </Text>
      <Separator />
      <Text style={styles.paragraph}>
-       Press play/pause/stop buttons to test audio. 
+       Press load track button below to test audio with play/pause/stop buttons below or on player. 
      </Text>
 
      <Button
@@ -123,6 +124,7 @@ const LibraryScreen = ({navigation}) => {
           onPress={loadSound}
       />
 
+      <View style={styles.container}>
       <TouchableOpacity onPress={playSound}>
         <ImageBackground source={require("./assets/play.png")} style={styles.playbtn}>
           <Text style={styles.title}>Play</Text>
@@ -140,6 +142,35 @@ const LibraryScreen = ({navigation}) => {
           <Text style={styles.title}>Stop</Text>
         </ImageBackground>
       </TouchableOpacity>
+      </View>
+
+      <Separator />
+
+      <View style={styles.trackplayer}>
+      <View style={styles.container}>
+        <Image source={require('./assets/track.png')} style={{width: 100, height: 100, borderWidth: 1, borderColor: '#737373',}}/>
+
+      </View>
+      <View style={styles.container}>
+        <TouchableOpacity onPress={playSound}>
+        <ImageBackground source={require("./assets/play.png")} style={styles.playbtn}>
+          <Text style={styles.title}>Play</Text>
+        </ImageBackground>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={pauseSound}>
+        <ImageBackground source={require("./assets/pause.png")} style={styles.playbtn}>
+          <Text style={styles.title}>Pause</Text>
+        </ImageBackground>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={loadSound}>
+        <ImageBackground source={require("./assets/stop.png")} style={styles.playbtn}>
+          <Text style={styles.title}>Stop</Text>
+        </ImageBackground>
+      </TouchableOpacity>
+      <Text>Artist Name - Track Name</Text>
+      <Text>Track Length</Text>
+      </View>
+      </View>
 
       <View style={styles.libbtn}>
         <Button
@@ -343,7 +374,6 @@ const styles = StyleSheet.create({
   playbtn: {
     width: 50,
     height: 50,
-    alignSelf: 'center',
   },
   separator: {
     marginVertical: 8,
@@ -353,33 +383,55 @@ const styles = StyleSheet.create({
   libbtn: {
     right: 300,
     left: 0,
-    width: 105,
+    width: "26%",
     position: 'absolute',
     bottom: 0,
   },
   editbtn: {
     right: 200,
     left: 105,
-    width: 105,
+    width: "26%",
     position: 'absolute',
     bottom: 0,
   },
   explorebtn: {
     right: 100,
     left: 206,
-    width: 105,
+    width: "26%",
     position: 'absolute',
     bottom: 0,
   },
   accbtn: {
     right: 0,
     left: 307,
-    width: 105,
+    width: "26%",
     position: 'absolute',
     bottom: 0,
   },
   title: {
     opacity: 0,
+  },
+  trackplayer: {
+    flex: 1,
+    alignItems: "center",
+    flexDirection: 'row', 
+    flexWrap: 'wrap',
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: '#737373',
+    width: '100%',
+    fontSize: 24,
+    position: "absolute",
+    bottom: 37
+  },
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: 'row', 
+    flexWrap: 'wrap',
+    paddingTop: 20,
+    paddingBottom: 20,
   }
 });
 

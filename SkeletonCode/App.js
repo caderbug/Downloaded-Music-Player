@@ -78,13 +78,23 @@ const LibraryScreen = ({navigation}) => {
   //for audio playback...
   const [sound, setSound] = React.useState();
 
-  async function playSound() {
+  //load track .. can stop by reloading track also
+  async function loadSound() {
     console.log('Loading Sound');
     const { sound } = await Audio.Sound.createAsync( require('./assets/track.mp3'));
     setSound(sound);
+  }
 
+  //play
+  async function playSound() {
     console.log('Playing Sound');
     await sound.playAsync();
+  }
+
+  //pause
+  async function pauseSound() {
+    console.log('Pausing Sound');
+    await sound.pauseAsync();
   }
 
   React.useEffect(() => {
@@ -104,15 +114,32 @@ const LibraryScreen = ({navigation}) => {
      </Text>
      <Separator />
      <Text style={styles.paragraph}>
-       Press play button to test audio. 
+       Press play/pause/stop buttons to test audio. 
      </Text>
+
+     <Button
+          title="Load test track"
+          color="#aaaaaa"
+          onPress={loadSound}
+      />
 
       <TouchableOpacity onPress={playSound}>
         <ImageBackground source={require("./assets/play.png")} style={styles.playbtn}>
-          <Text style={styles.title}>Press Me</Text>
+          <Text style={styles.title}>Play</Text>
         </ImageBackground>
       </TouchableOpacity>
 
+      <TouchableOpacity onPress={pauseSound}>
+        <ImageBackground source={require("./assets/pause.png")} style={styles.playbtn}>
+          <Text style={styles.title}>Pause</Text>
+        </ImageBackground>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={loadSound}>
+        <ImageBackground source={require("./assets/stop.png")} style={styles.playbtn}>
+          <Text style={styles.title}>Stop</Text>
+        </ImageBackground>
+      </TouchableOpacity>
 
       <View style={styles.libbtn}>
         <Button

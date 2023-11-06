@@ -21,9 +21,10 @@ WIP
 - Implement Different Tabs (UI buttons only, separate pages will be linked later) (issue https://github.com/utk-cs340-fall23/DownloadedMusicPlayer/issues/11)
 - Audio Playback (issue https://github.com/utk-cs340-fall23/DownloadedMusicPlayer/issues/6)
 - Play and Pause UI (issue https://github.com/utk-cs340-fall23/DownloadedMusicPlayer/issues/7)
+- Player Information (display title, artist, length) (issue https://github.com/utk-cs340-fall23/DownloadedMusicPlayer/issues/8)
 
 ### Files you worked on
-- DownloadedMusicPlayer/SkeletonCode/App.js - App code with tabs and placeholder pages, pages are to be filled. Functional play/pause/stop button UIs.
+- DownloadedMusicPlayer/SkeletonCode/App.js - App code with tabs and placeholder pages, pages are to be filled. Functional play/pause/stop button UIs. Added currently playing track UI at bottom, has info for album cover, artist name, track name, track length, and play/pause/stop.
 - DownloadedMusicPlayer/SkeletonCode/assets/ - Misc assets, play/pause/stop buttons, app icon, loading splash screen.
 
 ### What you accomplished

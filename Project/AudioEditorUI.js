@@ -1,50 +1,38 @@
 
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Image,Text, Pressable } from 'react-native';
-import Slider from 'react-native-slider';
+import { StyleSheet, View, Image,Text, Pressable, Share} from 'react-native';
+import Editor from './Editor.js';
+//import {AudioTools} from 'react-native-audio-video-tools';
 
 import Button from './button.js';
 
 export default function AudioEditorUI() {
 
-    const [range,setRange] = useState('50%');
-    const [sliding, setSliding] = useState('Inactive');
+    // sharing file to local storage
+  const customShare = async () => {
+
+     Share.share(
+      {
+        title: "shared",
+        message: "some message",
+      }
+     );
+  };
 
 
   return (
-    <View style={styles.container}>
-      <View style={styles.songTitle}>
-        <Text style={[styles.setSongColor,styles.setSongFont]}>Song Name</Text>  
-      </View> 
-      <View style={styles.artistName}>
-        <Text style={[styles.setArtistColor,styles.setArtistFont]}>Artist Name</Text>  
-      </View> 
-      
-      <Slider  
-        style = {{ width: 250, height: 40}}
-        minimumValue={0}
-        maximumValue={1}
-        minimumTrackTintColor='tomato'
-        maximumTrackTintColor='#000'
-        thumbTintColor='tomato'
-        value={0.5}
-        onSlidingStart={() => setSliding('Sliding')}
-        onSlidingComplete={() => setSliding('Inactive')}
-      />
-
-      <View style={styles.footerContainer}>
-        <Button label="Pause Play"/>
-        <Button label="Seek(RW)"/> 
-        <Button label="Seek(FF)" />
-        <Button label="Seek Start" />
-        <Button label="Seek End" />
-        <Button label="Cut" />
-        <Button label="REC" />
+      <View style={styles.container}>
+      <View>
+        <Text style={styles.title}> 
+          AUDIO EDITOR
+        </Text>
+        <Text style={styles.shareButton} color="black" onPress={customShare} /*SHARE BUTTON*/> 
+          SHARE
+        </Text>
+        <Editor /* AUDIO EDITOR PAGE */ />
       </View>
-      <StatusBar style= 'auto' />
+     
     </View>
-  );
-}
 
 const styles = StyleSheet.create({
   title: {

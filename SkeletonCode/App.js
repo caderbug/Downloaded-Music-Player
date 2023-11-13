@@ -1,13 +1,14 @@
 import {
-  AppRegistry,
-  Text,
-  View,
-  Button,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  ImageBackground, 
-  Image
+    AppRegistry,
+    Text,
+    View,
+    Button,
+    StyleSheet,
+    TextInput,
+    TouchableOpacity,
+    Trimmer,
+    ImageBackground,
+    Image
 } from 'react-native';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
@@ -18,421 +19,492 @@ import { Audio } from 'expo-av';
 const Stack = createNativeStackNavigator();
 const Separator = () => <View style={styles.separator} />;
 
+// Editor Constants
+const maxTrimDuration = 60000;
+const minimumTrimDuration = 1000;
+const totalDuration = 180000;
+
+const initialLeftHandlePosition = 0;
+const initialRightHandlePosition = 36000;
+
+const scrubInterval = 10;
+
 const MusicPlayerApp = () => {
 
-  return (
-    //defining some screens with the navigator
-    <NavigationContainer>
-      <Stack.Navigator>
+    return (
+        //defining some screens with the navigator
+        <NavigationContainer>
+            <Stack.Navigator>
 
-        <Stack.Screen
-          name="Title"
-          component={TitleScreen}
-          options={{title: 'Title', headerShown: false}}
-        />
+                <Stack.Screen
+                    name="Title"
+                    component={TitleScreen}
+                    options={{ title: 'Title', headerShown: false }}
+                />
 
-        <Stack.Screen 
-          name="Library Page" 
-          component={LibraryScreen} 
-        />
+                <Stack.Screen
+                    name="Library Page"
+                    component={LibraryScreen}
+                />
 
-        <Stack.Screen 
-          name="Editor Page" 
-          component={EditorScreen} 
-        />
+                <Stack.Screen
+                    name="Editor Page"
+                    component={EditorScreen}
+                />
 
-        <Stack.Screen 
-          name="Explore Page" 
-          component={ExploreScreen} 
-        />
-        
-        <Stack.Screen 
-          name="Account Page" 
-          component={AccountScreen} 
-        />
+                <Stack.Screen
+                    name="Explore Page"
+                    component={ExploreScreen}
+                />
 
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+                <Stack.Screen
+                    name="Account Page"
+                    component={AccountScreen}
+                />
+
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
 };
 
 //title page, library page is set for inital landing page
-const TitleScreen = ({navigation}) => {
-  return (
-   <View>
-    <Text style={styles.logo}>
-      Downloaded Music Player
-    </Text>
-    <Button 
-      title="Start Listening"
-      color="#000000" 
-      onPress={() =>
-        navigation.navigate('Library Page')}
-    />
-  </View>
-  );
+const TitleScreen = ({ navigation }) => {
+    return (
+        <View>
+            <Text style={styles.logo}>
+                Downloaded Music Player
+            </Text>
+            <Button
+                title="Start Listening"
+                color="#000000"
+                onPress={() =>
+                    navigation.navigate('Library Page')}
+            />
+        </View>
+    );
 };
 
 //library/player page goes here... placeholder for now
-const LibraryScreen = ({navigation}) => {
-  //define functions/vars up here
-  //for audio playback...
-  const [sound, setSound] = React.useState();
+const LibraryScreen = ({ navigation }) => {
+    //define functions/vars up here
+    //for audio playback...
+    const [sound, setSound] = React.useState();
 
-  //load track .. can stop by reloading track also
-  async function loadSound() {
-    console.log('Loading Sound');
-    const { sound } = await Audio.Sound.createAsync( require('./assets/track.mp3'));
-    setSound(sound);
-  }
+    //load track .. can stop by reloading track also
+    async function loadSound() {
+        console.log('Loading Sound');
+        const { sound } = await Audio.Sound.createAsync(require('./assets/track.mp3'));
+        setSound(sound);
+    }
 
-  //play
-  async function playSound() {
-    console.log('Playing Sound');
-    await sound.playAsync();
-  }
+    //play
+    async function playSound() {
+        console.log('Playing Sound');
+        await sound.playAsync();
+    }
 
-  //pause
-  async function pauseSound() {
-    console.log('Pausing Sound');
-    await sound.pauseAsync();
-  }
+    //pause
+    async function pauseSound() {
+        console.log('Pausing Sound');
+        await sound.pauseAsync();
+    }
 
-  React.useEffect(() => {
-    return sound
-      ? () => {
-          console.log('Unloading Sound');
-          sound.unloadAsync();
-        }
-      : undefined;
-  }, [sound]);
+    React.useEffect(() => {
+        return sound
+            ? () => {
+                console.log('Unloading Sound');
+                sound.unloadAsync();
+            }
+            : undefined;
+    }, [sound]);
 
-  //has working play button
-  return (
-   <View style={styles.screensize}>
-     <Text style={styles.paragraph}>
-       Welcome. Music library will be added soon.
-     </Text>
-     <Separator />
-     <Text style={styles.paragraph}>
-       Press load track button below to test audio with play/pause/stop buttons below or on player. 
-     </Text>
+    //has working play button
+    return (
+        <View style={styles.screensize}>
+            <Text style={styles.paragraph}>
+                Welcome. Music library will be added soon.
+            </Text>
+            <Separator />
+            <Text style={styles.paragraph}>
+                Press load track button below to test audio with play/pause/stop buttons below or on player.
+            </Text>
 
-     <Button
-          title="Load test track"
-          color="#aaaaaa"
-          onPress={loadSound}
-      />
+            <Button
+                title="Load test track"
+                color="#aaaaaa"
+                onPress={loadSound}
+            />
 
-      <View style={styles.container}>
-      <TouchableOpacity onPress={playSound}>
-        <ImageBackground source={require("./assets/play.png")} style={styles.playbtn}>
-          <Text style={styles.title}>Play</Text>
-        </ImageBackground>
-      </TouchableOpacity>
+            <View style={styles.container}>
+                <TouchableOpacity onPress={playSound}>
+                    <ImageBackground source={require("./assets/play.png")} style={styles.playbtn}>
+                        <Text style={styles.title}>Play</Text>
+                    </ImageBackground>
+                </TouchableOpacity>
 
-      <TouchableOpacity onPress={pauseSound}>
-        <ImageBackground source={require("./assets/pause.png")} style={styles.playbtn}>
-          <Text style={styles.title}>Pause</Text>
-        </ImageBackground>
-      </TouchableOpacity>
+                <TouchableOpacity onPress={pauseSound}>
+                    <ImageBackground source={require("./assets/pause.png")} style={styles.playbtn}>
+                        <Text style={styles.title}>Pause</Text>
+                    </ImageBackground>
+                </TouchableOpacity>
 
-      <TouchableOpacity onPress={loadSound}>
-        <ImageBackground source={require("./assets/stop.png")} style={styles.playbtn}>
-          <Text style={styles.title}>Stop</Text>
-        </ImageBackground>
-      </TouchableOpacity>
-      </View>
+                <TouchableOpacity onPress={loadSound}>
+                    <ImageBackground source={require("./assets/stop.png")} style={styles.playbtn}>
+                        <Text style={styles.title}>Stop</Text>
+                    </ImageBackground>
+                </TouchableOpacity>
+            </View>
 
-      <Separator />
+            <Separator />
 
-      <View style={styles.trackplayer}>
-      <View style={styles.container}>
-        <Image source={require('./assets/track.png')} style={{width: 100, height: 100, borderWidth: 1, borderColor: '#737373',}}/>
+            <View style={styles.trackplayer}>
+                <View style={styles.container}>
+                    <Image source={require('./assets/track.png')} style={{ width: 100, height: 100, borderWidth: 1, borderColor: '#737373', }} />
 
-      </View>
-      <View style={styles.container}>
-        <TouchableOpacity onPress={playSound}>
-        <ImageBackground source={require("./assets/play.png")} style={styles.playbtn}>
-          <Text style={styles.title}>Play</Text>
-        </ImageBackground>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={pauseSound}>
-        <ImageBackground source={require("./assets/pause.png")} style={styles.playbtn}>
-          <Text style={styles.title}>Pause</Text>
-        </ImageBackground>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={loadSound}>
-        <ImageBackground source={require("./assets/stop.png")} style={styles.playbtn}>
-          <Text style={styles.title}>Stop</Text>
-        </ImageBackground>
-      </TouchableOpacity>
-      <Text>Artist Name - Track Name</Text>
-      <Text>Track Length</Text>
-      </View>
-      </View>
+                </View>
+                <View style={styles.container}>
+                    <TouchableOpacity onPress={playSound}>
+                        <ImageBackground source={require("./assets/play.png")} style={styles.playbtn}>
+                            <Text style={styles.title}>Play</Text>
+                        </ImageBackground>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={pauseSound}>
+                        <ImageBackground source={require("./assets/pause.png")} style={styles.playbtn}>
+                            <Text style={styles.title}>Pause</Text>
+                        </ImageBackground>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={loadSound}>
+                        <ImageBackground source={require("./assets/stop.png")} style={styles.playbtn}>
+                            <Text style={styles.title}>Stop</Text>
+                        </ImageBackground>
+                    </TouchableOpacity>
+                    <Text>Artist Name - Track Name</Text>
+                    <Text>Track Length</Text>
+                </View>
+            </View>
 
-      <View style={styles.libbtn}>
-        <Button
-          title="Library"
-          color="#aaaaaa" 
-          onPress={() => navigation.navigate('Library Page')}
-        />
-      </View>
-      <View style={styles.editbtn}>
-        <Button
-          title="Editor"
-          color="#aaaaaa" 
-          onPress={() => navigation.navigate('Editor Page')}
-        />
-      </View>
-      <View style={styles.explorebtn}>
-        <Button
-          title="Explore"
-          color="#aaaaaa" 
-          onPress={() => navigation.navigate('Explore Page')}
-        />
-      </View>
-      <View style={styles.accbtn}>
-        <Button
-          title="Account"
-          color="#aaaaaa" 
-          onPress={() => navigation.navigate('Account Page')}
-        />
-      </View>
-    </View>
-  );
+            <View style={styles.libbtn}>
+                <Button
+                    title="Library"
+                    color="#aaaaaa"
+                    onPress={() => navigation.navigate('Library Page')}
+                />
+            </View>
+            <View style={styles.editbtn}>
+                <Button
+                    title="Editor"
+                    color="#aaaaaa"
+                    onPress={() => navigation.navigate('Editor Page')}
+                />
+            </View>
+            <View style={styles.explorebtn}>
+                <Button
+                    title="Explore"
+                    color="#aaaaaa"
+                    onPress={() => navigation.navigate('Explore Page')}
+                />
+            </View>
+            <View style={styles.accbtn}>
+                <Button
+                    title="Account"
+                    color="#aaaaaa"
+                    onPress={() => navigation.navigate('Account Page')}
+                />
+            </View>
+        </View>
+    );
 };
 
-//where music editor page code goes... placeholder for now
-const EditorScreen = ({navigation}) => {
+const EditorScreen = ({ navigation }) => {
+    // Functionality
+    // Define initial state variables
+    const initialLeftHandlePosition = 0;
+    const initialRightHandlePosition = 36000;
+    const scrubInterval = 10;
 
-  return(
-    <View style={styles.screensize}>
-    <Text style={styles.paragraph}>
-      Welcome. This is the Editor page. More features will be added soon.
-    </Text>
+    // Use the useState hook to manage state
+    const [playing, setPlaying] = useState(false);
+    const [trimmerLeftHandlePosition, setTrimmerLeftHandlePosition] = useState(initialLeftHandlePosition);
+    const [trimmerRightHandlePosition, setTrimmerRightHandlePosition] = useState(initialRightHandlePosition);
+    const [scrubberPosition, setScrubberPosition] = useState(1000);
+    const [scrubberInterval, setScrubberInterval] = useState(null);
 
-    <Separator />
+    // Function to start playing
+    const play = () => {
+        setPlaying(true);
 
+        // Update position of scrubber
+        const interval = setInterval(() => {
+            setScrubberPosition((prevPosition) => prevPosition + scrubInterval);
+        }, scrubInterval);
 
-     <View style={styles.libbtn}>
-       <Button
-         title="Library"
-         color="#aaaaaa" 
-         onPress={() => navigation.navigate('ibrary Page')}
-       />
-     </View>
-     <View style={styles.editbtn}>
-        <Button
-          title="Editor"
-          color="#aaaaaa" 
-          onPress={() => navigation.navigate('Editor Page')}
-        />
-      </View>
-      <View style={styles.explorebtn}>
-        <Button
-          title="Explore"
-          color="#aaaaaa" 
-          onPress={() => navigation.navigate('Explore Page')}
-        />
-      </View>
-     <View style={styles.accbtn}>
-       <Button
-         title="Account"
-         color="#aaaaaa" 
-         onPress={() => navigation.navigate('Account Page')}
-       />
-     </View>
-   </View>
-  );
-}
+        setScrubberInterval(interval);
+    };
+
+    // Function to pause
+    const pause = () => {
+        clearInterval(scrubberInterval);
+
+        // Stop position of scrubber
+        setPlaying(false);
+    };
+
+    // Function to handle change of trimming size
+    const onHandleChange = ({ leftPosition, rightPosition }) => {
+        setTrimmerLeftHandlePosition(leftPosition);
+        setTrimmerRightHandlePosition(rightPosition);
+    };
+
+    // Function to keep scrubber at position it was left off
+    const onScrubbingComplete = (newValue) => {
+        setPlaying(false);
+        setScrubberPosition(newValue);
+    };
+
+    // User Interface
+    return (
+        <View style={styles.screensize}>
+            <View>
+                <Trimmer
+                    onHandleChange={onHandleChange}
+                    totalDuration={totalDuration} // Make sure to define totalDuration
+                    trimmerLeftHandlePosition={trimmerLeftHandlePosition}
+                    trimmerRightHandlePosition={trimmerRightHandlePosition}
+                    minimumTrimDuration={minimumTrimDuration} // Make sure to define minimumTrimDuration
+                    maxTrimDuration={maxTrimDuration} // Make sure to define maxTrimDuration
+                    scaleInOnInit={false}
+                    tintColor="blue"
+                    markerColor="grey"
+                    trackBackgroundColor="powderblue"
+                    trackBorderColor="blue"
+                    scrubberColor="black"
+                    scrubberPosition={scrubberPosition}
+                    onScrubbingComplete={onScrubbingComplete}
+                />
+                <Button title="Pause" color="darkblue" onPress={pause} />
+                <Button title="Play" color="darkblue" onPress={play} />
+                <Button title="Cut" color="darkblue" onPress={play} />
+            </View>
+
+            <Separator />
+
+            <View style={styles.libbtn}>
+                <Button
+                    title="Library"
+                    color="#aaaaaa"
+                    onPress={() => navigation.navigate('ibrary Page')}
+                />
+            </View>
+            <View style={styles.editbtn}>
+                <Button
+                    title="Editor"
+                    color="#aaaaaa"
+                    onPress={() => navigation.navigate('Editor Page')}
+                />
+            </View>
+            <View style={styles.explorebtn}>
+                <Button
+                    title="Explore"
+                    color="#aaaaaa"
+                    onPress={() => navigation.navigate('Explore Page')}
+                />
+            </View>
+            <View style={styles.accbtn}>
+                <Button
+                    title="Account"
+                    color="#aaaaaa"
+                    onPress={() => navigation.navigate('Account Page')}
+                />
+            </View>
+        </View>
+    );
+};
 
 //where explore screen code goes... placeholder for now
-const ExploreScreen = ({navigation}) => {
+const ExploreScreen = ({ navigation }) => {
 
-  return(
-    <View style={styles.screensize}>
-    <Text style={styles.paragraph}>
-      Welcome. This is the Explore page. More features will be added soon.
-    </Text>
+    return (
+        <View style={styles.screensize}>
+            <Text style={styles.paragraph}>
+                Welcome. This is the Explore page. More features will be added soon.
+            </Text>
 
-    <Separator />
+            <Separator />
 
-     <View style={styles.libbtn}>
-       <Button
-         title="Library"
-         color="#aaaaaa" 
-         onPress={() => navigation.navigate('Library Page')}
-       />
-     </View>
-     <View style={styles.editbtn}>
-        <Button
-          title="Editor"
-          color="#aaaaaa" 
-          onPress={() => navigation.navigate('Editor Page')}
-        />
-      </View>
-      <View style={styles.explorebtn}>
-        <Button
-          title="Explore"
-          color="#aaaaaa" 
-          onPress={() => navigation.navigate('Explore Page')}
-        />
-      </View>
-     <View style={styles.accbtn}>
-       <Button
-         title="Account"
-         color="#aaaaaa" 
-         onPress={() => navigation.navigate('Account Page')}
-       />
-     </View>
-   </View>
-  );
+            <View style={styles.libbtn}>
+                <Button
+                    title="Library"
+                    color="#aaaaaa"
+                    onPress={() => navigation.navigate('Library Page')}
+                />
+            </View>
+            <View style={styles.editbtn}>
+                <Button
+                    title="Editor"
+                    color="#aaaaaa"
+                    onPress={() => navigation.navigate('Editor Page')}
+                />
+            </View>
+            <View style={styles.explorebtn}>
+                <Button
+                    title="Explore"
+                    color="#aaaaaa"
+                    onPress={() => navigation.navigate('Explore Page')}
+                />
+            </View>
+            <View style={styles.accbtn}>
+                <Button
+                    title="Account"
+                    color="#aaaaaa"
+                    onPress={() => navigation.navigate('Account Page')}
+                />
+            </View>
+        </View>
+    );
 }
 
 //where account page code goes... placeholder for now
-const AccountScreen = ({navigation}) => {
+const AccountScreen = ({ navigation }) => {
 
-  const [username, onChangeText] = useState('user');
+    const [username, onChangeText] = useState('user');
 
-  return(
-    <View style={styles.screensize}>
-    <Text style={styles.paragraph}>
-      Welcome. This is the Account page. More features will be added soon.
-    </Text>
+    return (
+        <View style={styles.screensize}>
+            <Text style={styles.paragraph}>
+                Welcome. This is the Account page. More features will be added soon.
+            </Text>
 
-    <Separator />
-    <Text style={styles.paragraph}>
-      Input a username.
-    </Text>
-     <TextInput
-       style={styles.input}
-       onChangeText={onChangeText}
-       value={username}
-     />
-    <Text style={styles.paragraph}>
-      Hello, {username}.
-    </Text>
-    <Separator />
+            <Separator />
+            <Text style={styles.paragraph}>
+                Input a username.
+            </Text>
+            <TextInput
+                style={styles.input}
+                onChangeText={onChangeText}
+                value={username}
+            />
+            <Text style={styles.paragraph}>
+                Hello, {username}.
+            </Text>
+            <Separator />
 
-     <View style={styles.libbtn}>
-       <Button
-         title="Library"
-         color="#aaaaaa" 
-         onPress={() => navigation.navigate('Library Page')}
-       />
-     </View>
-     <View style={styles.editbtn}>
-        <Button
-          title="Editor"
-          color="#aaaaaa" 
-          onPress={() => navigation.navigate('Editor Page')}
-        />
-      </View>
-      <View style={styles.explorebtn}>
-        <Button
-          title="Explore"
-          color="#aaaaaa" 
-          onPress={() => navigation.navigate('Explore Page')}
-        />
-      </View>
-     <View style={styles.accbtn}>
-       <Button
-         title="Account"
-         color="#aaaaaa" 
-         onPress={() => navigation.navigate('Account Page')}
-       />
-     </View>
-   </View>
+            <View style={styles.libbtn}>
+                <Button
+                    title="Library"
+                    color="#aaaaaa"
+                    onPress={() => navigation.navigate('Library Page')}
+                />
+            </View>
+            <View style={styles.editbtn}>
+                <Button
+                    title="Editor"
+                    color="#aaaaaa"
+                    onPress={() => navigation.navigate('Editor Page')}
+                />
+            </View>
+            <View style={styles.explorebtn}>
+                <Button
+                    title="Explore"
+                    color="#aaaaaa"
+                    onPress={() => navigation.navigate('Explore Page')}
+                />
+            </View>
+            <View style={styles.accbtn}>
+                <Button
+                    title="Account"
+                    color="#aaaaaa"
+                    onPress={() => navigation.navigate('Account Page')}
+                />
+            </View>
+        </View>
 
-  );
+    );
 }
 
 //styles go here...
 const styles = StyleSheet.create({
-  paragraph: {
-    margin: 24,
-    fontSize: 14,
-    textAlign: 'center',
-  },
-  logo: {
-    paddingTop: 200,
-    height: 400,
-    fontWeight: 'bold',
-    fontSize: 40,
-    textAlign: 'center',
-  },
-  screensize:{
-    height: 755,
-  },
-  input: {
-    borderWidth: 1,
-    padding: 10,
-    margin: 12,
-  },
-  playbtn: {
-    width: 50,
-    height: 50,
-  },
-  separator: {
-    marginVertical: 8,
-    borderBottomColor: '#737373',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  libbtn: {
-    right: 300,
-    left: 0,
-    width: "26%",
-    position: 'absolute',
-    bottom: 0,
-  },
-  editbtn: {
-    right: 200,
-    left: 105,
-    width: "26%",
-    position: 'absolute',
-    bottom: 0,
-  },
-  explorebtn: {
-    right: 100,
-    left: 206,
-    width: "26%",
-    position: 'absolute',
-    bottom: 0,
-  },
-  accbtn: {
-    right: 0,
-    left: 307,
-    width: "26%",
-    position: 'absolute',
-    bottom: 0,
-  },
-  title: {
-    opacity: 0,
-  },
-  trackplayer: {
-    flex: 1,
-    alignItems: "center",
-    flexDirection: 'row', 
-    flexWrap: 'wrap',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: '#737373',
-    width: '100%',
-    fontSize: 24,
-    position: "absolute",
-    bottom: 37
-  },
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: 'row', 
-    flexWrap: 'wrap',
-    paddingTop: 20,
-    paddingBottom: 20,
-  }
+    paragraph: {
+        margin: 24,
+        fontSize: 14,
+        textAlign: 'center',
+    },
+    logo: {
+        paddingTop: 200,
+        height: 400,
+        fontWeight: 'bold',
+        fontSize: 40,
+        textAlign: 'center',
+    },
+    screensize: {
+        height: 755,
+    },
+    input: {
+        borderWidth: 1,
+        padding: 10,
+        margin: 12,
+    },
+    playbtn: {
+        width: 50,
+        height: 50,
+    },
+    separator: {
+        marginVertical: 8,
+        borderBottomColor: '#737373',
+        borderBottomWidth: StyleSheet.hairlineWidth,
+    },
+    libbtn: {
+        right: 300,
+        left: 0,
+        width: "26%",
+        position: 'absolute',
+        bottom: 0,
+    },
+    editbtn: {
+        right: 200,
+        left: 105,
+        width: "26%",
+        position: 'absolute',
+        bottom: 0,
+    },
+    explorebtn: {
+        right: 100,
+        left: 206,
+        width: "26%",
+        position: 'absolute',
+        bottom: 0,
+    },
+    accbtn: {
+        right: 0,
+        left: 307,
+        width: "26%",
+        position: 'absolute',
+        bottom: 0,
+    },
+    title: {
+        opacity: 0,
+    },
+    trackplayer: {
+        flex: 1,
+        alignItems: "center",
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+        borderColor: '#737373',
+        width: '100%',
+        fontSize: 24,
+        position: "absolute",
+        bottom: 37
+    },
+    container: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        paddingTop: 20,
+        paddingBottom: 20,
+    }
 });
 
 export default MusicPlayerApp;

@@ -47,7 +47,6 @@
 .top_button{
 	border-radius: 10px;
 	background-color: rgb(255, 234, 255);
-	width: 200px;
 	height: 40px;
 	margin-left: 10px;
 	margin-bottom: 10px;
@@ -68,8 +67,20 @@
 
 .filter{
 	width: 40%;
+	height: 100px;
 	position: fixed;
 	display: inline-block;
 	left: 60%;
 	top: 60px;
+}
+
+.filter_option{
+	width: 100%;
+	background-color: rgb(255, 255, 255);
+	height: 40px;
+}
+
+.filter_text{
+	font: 18px Verdana;
+	line-height: 0;
 }

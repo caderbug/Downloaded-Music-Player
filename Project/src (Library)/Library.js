@@ -4,6 +4,8 @@ import './Library.css';
 import { clear } from '@testing-library/user-event/dist/clear';
 
 export default function Library() {
+	var filter_open = false;
+	var persistent_list = {};
 	var current_sort = "Title";
 	var track_list = {};
 	/*
@@ -34,16 +36,16 @@ export default function Library() {
 
 	function get_names(category){
 		var list = [];
-		for(let i = 0; i < Object.keys(track_list).length; i++){
-			var name = track_list[i][category];
+		for(let i = 0; i < Object.keys(persistent_list).length; i++){
+			var name = persistent_list[i][category];
 			if(find(list, name) == -1){
 				list.push(name);
-				console.log(name);
 			}
 		}
+		return list;
 	}
 
-	// still arbitrary data, will read metadata once 
+	// still arbitrary data, will read metadata once it's added
 	function load_info(){ 
 		for(let i = 0; i < 20; i++){ // COPY PASTED CODE FROM HERE
 			var new_info = {};
@@ -55,8 +57,10 @@ export default function Library() {
 			new_info["Artist"] = a;
 			new_info["Album"] = "AlbumName";
 			new_info["Path"] = "placeholder.mp3";
-			track_list[i] = new_info; 
+			persistent_list[i] = new_info;
+			//track_list[i] = new_info;
 		} // UNTIL HERE
+		track_list = persistent_list;
 	}
 
 	function get_songs(dst_list, src_list, by, name){ // COPY PASTED CODE FROM HERE
@@ -93,7 +97,8 @@ export default function Library() {
 		// 'behavior' determines if it's sort or filter
 		// 'by' determines what to sort or filter by ("Title", "Artist", "Album")
 		// 'name' is what artist/playlist/album name to filter by
-		load_info();
+		//load_info();
+		track_list = persistent_list;
 
 		if(behavior == "sort"){
 			if(by == "Title"){
@@ -134,6 +139,7 @@ export default function Library() {
 		}else if(behavior == "filter"){
 			var filtered_list = {};
 			get_songs(filtered_list, track_list, by, name);
+			sort(filtered_list, current_sort);
 			track_list = filtered_list;
 		}
 	} // UNTIL HERE
@@ -211,32 +217,99 @@ export default function Library() {
 		display_songs();
 	}
 
+	function clear_filter(){
+		const filter = document.getElementById("filter");
+		while(filter.hasChildNodes()){
+			filter.removeChild(filter.firstChild);
+		}
+	}
+
+	function filter_chosen(by, name){
+		clear_filter();
+		filter_open = false;
+		apply_changes("filter", by, name);
+		clear_songs();
+		display_songs();
+	}
+
+	function fill_filter(by){
+		const filter = document.getElementById("filter");
+		clear_filter();
+		var list = get_names(by);
+		for(let i = 0; i < list.length; i++){
+			const button = document.createElement("button");
+			const button_text = document.createElement("p");
+			const button_node = document.createTextNode(list[i]);
+			button_text.setAttribute("class", "filter_text");
+			button.setAttribute("class", "filter_option");
+			button.addEventListener("click", () => filter_chosen(by, list[i]));
+			button_text.appendChild(button_node);
+			button.appendChild(button_text);
+			filter.appendChild(button);
+		}
+	}
+
 	function filter_clicked(){
+		const filter = document.getElementById("filter");
+		if(filter_open){
+			clear_filter();
+			filter_open = false;
+		}else{
+			filter_open = true;
+			const artist = document.createElement("button");
+			const artist_text = document.createElement("p");
+			const artist_node = document.createTextNode("Artists");
+			artist_text.setAttribute("class", "filter_text");
+			artist.setAttribute("class", "filter_option");
+			artist.addEventListener("click", () => fill_filter("Artist"));
+			artist_text.appendChild(artist_node);
+			artist.appendChild(artist_text);
+			filter.appendChild(artist);
+
+			const album = document.createElement("button");
+			const album_text = document.createElement("p");
+			const album_node = document.createTextNode("Albums");
+			album_text.setAttribute("class", "filter_text");
+			album.setAttribute("class", "filter_option");
+			album.addEventListener("click", () => fill_filter("Album"));
+			album_text.appendChild(album_node);
+			album.appendChild(album_text);
+			filter.appendChild(album);
+		}
+	}
+
+	function playlist_clicked(){
 
 	}
 
 	React.useEffect(() => {
 		const filter_div = document.createElement("div");
 		filter_div.setAttribute("class", "filter");
+		filter_div.setAttribute("id", "filter");
 		document.body.appendChild(filter_div);
 
 		const lib = document.createElement("div");
 		lib.setAttribute("id", "library");
 		document.body.appendChild(lib);
-		
+
+		load_info();
 		apply_changes("sort", "Title"); // sorts by title name by default
 		display_songs();
 	});
 
 	// default HTML to be edited by the code above
 	return(
-		<div>
+		<div id="top_bar">
 			<button id="sort_button" class="top_button" onClick={sort_clicked}>
 				<p id = "sort_text" class="top_text">Sorting by Title</p>
 			</button>
 			
 			<button id="filter_button" class="top_button" onClick={filter_clicked}>
 				<p class="top_text">Filter</p>
+			</button>
+
+			<button id="playlist_button" class="top_button" onClick={playlist_clicked}>
+				<p class="top_text">Playlists</p>
 			</button>
 		</div>
 	);

@@ -5,9 +5,12 @@ import { clear } from '@testing-library/user-event/dist/clear';
 
 export default function Library() {
 	var filter_open = false;
+	var playlist_open = false;
+	var playlist_filter = false;
 	var persistent_list = {};
 	var current_sort = "Title";
 	var track_list = {};
+	var playlists = {};
 	/*
 	Tracklist:
 	  1: {
@@ -48,6 +51,7 @@ export default function Library() {
 	// still arbitrary data, will read metadata once it's added
 	function load_info(){ 
 		for(let i = 0; i < 20; i++){ // COPY PASTED CODE FROM HERE
+			var path = "placeholder" + i + ".mp3";
 			var new_info = {};
 			new_info["Title"] = "Track" + (Math.floor(Math.random() * 90)+10);
 			var a = "Helo";
@@ -56,7 +60,7 @@ export default function Library() {
 			}
 			new_info["Artist"] = a;
 			new_info["Album"] = "AlbumName";
-			new_info["Path"] = "placeholder.mp3";
+			new_info["Path"] = path;
 			persistent_list[i] = new_info;
 			//track_list[i] = new_info;
 		} // UNTIL HERE
@@ -195,7 +199,6 @@ export default function Library() {
 
 	function clear_songs(){
 		const lib = document.getElementById("library");
-
 		while(lib.hasChildNodes()){
 			lib.removeChild(lib.firstChild);
 		}
@@ -215,6 +218,7 @@ export default function Library() {
 		apply_changes("sort", current_sort);
 		clear_songs();
 		display_songs();
+		undo_playlist();
 	}
 
 	function clear_filter(){
@@ -230,6 +234,7 @@ export default function Library() {
 		apply_changes("filter", by, name);
 		clear_songs();
 		display_songs();
+		undo_playlist();
 	}
 
 	function fill_filter(by){
@@ -255,7 +260,9 @@ export default function Library() {
 			clear_filter();
 			filter_open = false;
 		}else{
+			clear_filter();
 			filter_open = true;
+			playlist_open = false;
 			const artist = document.createElement("button");
 			const artist_text = document.createElement("p");
 			const artist_node = document.createTextNode("Artists");
@@ -278,8 +285,102 @@ export default function Library() {
 		}
 	}
 
-	function playlist_clicked(){
+	function find_by_path(path){
+		console.log(path);
+		for(let i = 0; i < Object.keys(persistent_list).length; i++){
+			console.log(persistent_list[i].Path, path);
+			if(persistent_list[i].Path == path){
+				return i;
+			}
+		}
+	}
 
+	function display_playlist(index){
+		// loop through playlist
+		var list = {}
+		for(let i = 0; i < playlists[index].Order.length; i++){
+			var track_index = find_by_path(playlists[index].Order[i]);
+			list[i] = persistent_list[track_index];
+		}
+		track_list = list;
+		clear_songs();
+		display_songs();
+		clear_filter();
+		playlist_open = false;
+		playlist_filter = true;
+		document.getElementById("playlist_text").textContent = "Back";
+		document.getElementById("sort_text").textContent = "Sorting by Title";
+		current_sort = "Title";
+	}
+
+	function fill_playlist(){
+		const filter = document.getElementById("filter");
+		clear_filter();
+		if(Object.keys(playlists).length == 0){
+			playlist_open = false;
+		}
+		for(let i = 0; i < Object.keys(playlists).length; i++){
+			const button = document.createElement("button");
+			const button_text = document.createElement("p");
+			const button_node = document.createTextNode(playlists[i].Name);
+			button_text.setAttribute("class", "filter_text");
+			button.setAttribute("class", "filter_option");
+			button.addEventListener("click", () => display_playlist(i));
+			button_text.appendChild(button_node);
+			button.appendChild(button_text);
+			filter.appendChild(button);
+		}
+	}
+
+	function new_playlist(){
+		clear_filter();
+		playlist_open = false;
+		var i = Object.keys(playlists).length;
+		playlists[i] = {
+			Name: "PlaylistName",
+			Order: ["placeholder1.mp3", "placeholder2.mp3", "placeholder3.mp3"]
+		}
+	}
+
+	function undo_playlist(){
+		document.getElementById("playlist_text").textContent = "Playlists";
+		playlist_filter = false;
+	}
+
+	function playlist_clicked(){
+		const filter = document.getElementById("filter");
+		if(playlist_filter){
+			apply_changes("sort", current_sort);
+			clear_songs();
+			display_songs();
+			undo_playlist();
+		}else if(playlist_open){
+			clear_filter();
+			playlist_open = false;
+		}else{
+			clear_filter();
+			playlist_open = true;
+			filter_open = false;
+			const playlist = document.createElement("button");
+			const playlist_text = document.createElement("p");
+			const playlist_node = document.createTextNode("Add New Playlist");
+			playlist_text.setAttribute("class", "filter_text");
+			playlist.setAttribute("class", "filter_option");
+			playlist.addEventListener("click", () => new_playlist());
+			playlist_text.appendChild(playlist_node);
+			playlist.appendChild(playlist_text);
+			filter.appendChild(playlist);
+
+			const view = document.createElement("button");
+			const view_text = document.createElement("p");
+			const view_node = document.createTextNode("View Playlists");
+			view_text.setAttribute("class", "filter_text");
+			view.setAttribute("class", "filter_option");
+			view.addEventListener("click", () => fill_playlist());
+			view_text.appendChild(view_node);
+			view.appendChild(view_text);
+			filter.appendChild(view);
+		}
 	}
 
 	React.useEffect(() => {
@@ -309,7 +410,7 @@ export default function Library() {
 			</button>
 
 			<button id="playlist_button" class="top_button" onClick={playlist_clicked}>
-				<p class="top_text">Playlists</p>
+				<p id="playlist_text" class="top_text">Playlists</p>
 			</button>
 		</div>
 	);

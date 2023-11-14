@@ -1,3 +1,4 @@
+Library.js
 ac62fe72 (collinspearson 2023-11-13 22:20:10 -0500   3) import add from './add.png';
 7c8c3259 (collinspearson 2023-11-13 11:52:49 -0500   8)         var filter_open = false;
 556e9a59 (collinspearson 2023-11-13 18:23:22 -0500   9)         var playlist_open = false;
@@ -231,3 +232,62 @@ ac62fe72 (collinspearson 2023-11-13 22:20:10 -0500 395)                         
 556e9a59 (collinspearson 2023-11-13 18:23:22 -0500 445)                                 <p id="playlist_text" class="top_text">Playlists</p>
 7c8c3259 (collinspearson 2023-11-13 11:52:49 -0500 446)                         </button>
 7c8c3259 (collinspearson 2023-11-13 11:52:49 -0500 449) }
+
+
+
+Library.css
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  44) .play_section{
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  45)         float: left;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  46)         display: inline;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  47)         position: relative;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  48)         left: 10px;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  49)         top: 10px;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  50)         width: 100px;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  51)         height: 100%;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  52)         opacity: 1;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  53) }
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  54)
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  55) .play_button{
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  56)         width: 80%;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  57)         height: 80%;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  58)         border-radius: 10px;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  59)         background-color: white;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  60) }
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  61)
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  70)         height: 100%;
+cc3da277 (collinspearson 2023-11-13 11:53:30 -0500  75) }
+cc3da277 (collinspearson 2023-11-13 11:53:30 -0500  76)
+cc3da277 (collinspearson 2023-11-13 11:53:30 -0500  77) .filter_option{
+cc3da277 (collinspearson 2023-11-13 11:53:30 -0500  78)         width: 100%;
+cc3da277 (collinspearson 2023-11-13 11:53:30 -0500  79)         background-color: rgb(255, 255, 255);
+cc3da277 (collinspearson 2023-11-13 11:53:30 -0500  80)         height: 40px;
+cc3da277 (collinspearson 2023-11-13 11:53:30 -0500  81) }
+cc3da277 (collinspearson 2023-11-13 11:53:30 -0500  82)
+cc3da277 (collinspearson 2023-11-13 11:53:30 -0500  83) .filter_text{
+cc3da277 (collinspearson 2023-11-13 11:53:30 -0500  84)         font: 18px Verdana;
+cc3da277 (collinspearson 2023-11-13 11:53:30 -0500  85)         line-height: 0;
+cc3da277 (collinspearson 2023-11-13 11:53:30 -0500  86) }
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  87)
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  88) .playlist_section{
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  89)         float: right;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  90)         display: inline;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  91)         position: relative;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  92)         left: 10px;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  93)         top: 10px;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  94)         width: 100px;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  95)         height: 100%;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  96)         opacity: 1;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  97) }
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  98)
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500  99) .playlist_button{
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500 100)         width: 80%;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500 101)         height: 80%;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500 102)         border-radius: 10px;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500 103)         background-color: white;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500 104) }
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500 105)
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500 106) .playlist_image{
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500 107)         margin-top: 3px;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500 108)         width: 100%;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500 109)         height: 82%;
+2c01df56 (collinspearson 2023-11-13 22:20:37 -0500 110) }

@@ -1,11 +1,13 @@
 import React from 'react';
 import logo from './play.png';
+import add from './add.png';
 import './Library.css';
 import { clear } from '@testing-library/user-event/dist/clear';
 
 export default function Library() {
 	var filter_open = false;
 	var playlist_open = false;
+	var change_open = false;
 	var playlist_filter = false;
 	var persistent_list = {};
 	var current_sort = "Title";
@@ -159,27 +161,38 @@ export default function Library() {
 			const list_div = document.createElement("div");
 			const button_div = document.createElement("div");
 			const text_div = document.createElement("div");
+			const playlist_div = document.createElement("div");
+			list_div.setAttribute("class", "track");
+			button_div.setAttribute("class", "play_section");
+			text_div.setAttribute("class", "text_section");
+			playlist_div.setAttribute("class", "playlist_section");
+			separator_div.setAttribute("style", "height: 5px; width: 100%;")
 
-			const play_button = document.createElement("button");
 			const title_text = document.createElement("p");
 			const title_node = document.createTextNode(title);
 			const artist_text = document.createElement("p");
 			const artist_node = document.createTextNode(artist);
-			list_div.setAttribute("class", "track");
-			button_div.setAttribute("class", "button_section");
-			text_div.setAttribute("class", "text_section");
-			play_button.setAttribute("class", "play_button")
-			separator_div.setAttribute("style", "height: 5px; width: 100%;")
 			title_text.setAttribute("class", "title_class");
 			artist_text.setAttribute("class", "artist_class");
 
-			const image = document.createElement("img");
-			image.setAttribute("src", logo)
-			image.setAttribute("class", "play_image");
-			play_button.appendChild(image);
-			play_button.addEventListener("click", (event) => {
-				play(i);
-			})
+			const play_button = document.createElement("button");
+			const playlist_button = document.createElement("button");
+			play_button.setAttribute("class", "play_button")
+			playlist_button.setAttribute("class", "playlist_button");
+
+			const play_image = document.createElement("img");
+			play_image.setAttribute("src", logo)
+			play_image.setAttribute("class", "play_image");
+			play_button.appendChild(play_image);
+			play_button.addEventListener("click", () => play(i));
+
+			const playlist_image = document.createElement("img");
+			playlist_image.setAttribute("src", add)
+			playlist_image.setAttribute("class", "playlist_image");
+			playlist_button.appendChild(playlist_image);
+			playlist_button.addEventListener("click", () => {
+				fill_playlist("add", track_list[i].Path);
+			});
 
 			// adds button section to row
 			button_div.appendChild(play_button);
@@ -189,6 +202,9 @@ export default function Library() {
 			text_div.appendChild(title_text);
 			list_div.appendChild(text_div);
 			text_div.appendChild(artist_text)
+
+			list_div.appendChild(playlist_div);
+			playlist_div.appendChild(playlist_button);
 
 			title_text.appendChild(title_node);
 			artist_text.appendChild(artist_node);
@@ -237,6 +253,16 @@ export default function Library() {
 		undo_playlist();
 	}
 
+	function add_song(playlist_index, path){
+		
+		var new_index = playlists[playlist_index].Order.length;
+		console.log("Add " + path + " at " + new_index);
+		playlists[playlist_index].Order[new_index] = path;
+		for(let i = 0; i < playlists[playlist_index].Order.length; i++){
+			console.log(playlists[playlist_index].Order[i]);
+		}
+	}
+
 	function fill_filter(by){
 		const filter = document.getElementById("filter");
 		clear_filter();
@@ -248,6 +274,7 @@ export default function Library() {
 			button_text.setAttribute("class", "filter_text");
 			button.setAttribute("class", "filter_option");
 			button.addEventListener("click", () => filter_chosen(by, list[i]));
+
 			button_text.appendChild(button_node);
 			button.appendChild(button_text);
 			filter.appendChild(button);
@@ -263,6 +290,7 @@ export default function Library() {
 			clear_filter();
 			filter_open = true;
 			playlist_open = false;
+			change_open = false;
 			const artist = document.createElement("button");
 			const artist_text = document.createElement("p");
 			const artist_node = document.createTextNode("Artists");
@@ -286,9 +314,7 @@ export default function Library() {
 	}
 
 	function find_by_path(path){
-		console.log(path);
 		for(let i = 0; i < Object.keys(persistent_list).length; i++){
-			console.log(persistent_list[i].Path, path);
 			if(persistent_list[i].Path == path){
 				return i;
 			}
@@ -313,7 +339,7 @@ export default function Library() {
 		current_sort = "Title";
 	}
 
-	function fill_playlist(){
+	function fill_playlist(intent, path){
 		const filter = document.getElementById("filter");
 		clear_filter();
 		if(Object.keys(playlists).length == 0){
@@ -325,7 +351,12 @@ export default function Library() {
 			const button_node = document.createTextNode(playlists[i].Name);
 			button_text.setAttribute("class", "filter_text");
 			button.setAttribute("class", "filter_option");
-			button.addEventListener("click", () => display_playlist(i));
+			if(intent == "add"){
+				button.addEventListener("click", () => add_song(i, path));
+			}else{
+				button.addEventListener("click", () => display_playlist(i));
+			}
+			
 			button_text.appendChild(button_node);
 			button.appendChild(button_text);
 			filter.appendChild(button);
@@ -361,6 +392,7 @@ export default function Library() {
 			clear_filter();
 			playlist_open = true;
 			filter_open = false;
+			change_open = false;
 			const playlist = document.createElement("button");
 			const playlist_text = document.createElement("p");
 			const playlist_node = document.createTextNode("Add New Playlist");

@@ -8,7 +8,7 @@ Skye Nidiffer - GH ID: nidif - Downloaded Music Player
 - Explore Tab Functionality (issue https://github.com/utk-cs340-fall23/DownloadedMusicPlayer/issues/30)
 
 ### What you did not do
-- Explore tab is not yet fully functional, as I am still learning and working out how to do the webscraping and how to call it from the app when the explore page is loaded. I will work on this more in Sprint 4.
+- Explore tab is not yet fully functional, as I am still learning and working out how to do the web scraping and how to call it from the app when the explore page is loaded. I will work on this more in Sprint 4.
 - Settings tab UI is just basic right now, but additional settings can be added as needed. Still working on getting something working with reading/writing to files.
 
 ### What problems you encountered
@@ -23,4 +23,5 @@ Skye Nidiffer - GH ID: nidif - Downloaded Music Player
 - DownloadedMusicPlayer/SkeletonCode/App.js - Added settings UI. Explore tab functionality and UI is yet to be added.
 
 ### What you accomplished
-- TBA
+- Settings UI is in place, can be added upon as needed, variables and switches can be accessed within the app.
+- Solid research and planning towards getting explore page done by sprint 4.

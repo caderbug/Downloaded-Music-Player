@@ -8,11 +8,11 @@ Skye Nidiffer - GH ID: nidif - Downloaded Music Player
 - Explore Tab Functionality (issue https://github.com/utk-cs340-fall23/DownloadedMusicPlayer/issues/30)
 
 ### What you did not do
-- Explore tab is not yet fully functional, as I am still learning and working out how to do the webscraping and how to call it from the app when the explore page is loaded. I will work on this more in Sprint 4. Using Python for the web scraping right now.
-- Settings tab UI and functions are just basic right now, but they are saved to a file for the app to read/write with expo-file-system. Additional settings can be added as needed.
+- Explore tab is not yet fully functional, as I am still learning and working out how to do the webscraping and how to call it from the app when the explore page is loaded. I will work on this more in Sprint 4.
+- Settings tab UI is just basic right now, but additional settings can be added as needed. Still working on getting something working with reading/writing to files.
 
 ### What problems you encountered
-- Learning how to do web scraping and calling Python scripts from inside the app is taking some time, but there are resources available to learn from.
+- Learning how to do web scraping and calling it from inside the app is taking some time, but there are resources available to learn from. Reading/writing files with expo-file-system is difficult because of lack of documentation. May look into alternatives.
 
 ### Issues you worked on
 - Settings Tab UI (issue https://github.com/utk-cs340-fall23/DownloadedMusicPlayer/issues/21)
@@ -20,7 +20,7 @@ Skye Nidiffer - GH ID: nidif - Downloaded Music Player
 - Explore Tab Functionality (issue https://github.com/utk-cs340-fall23/DownloadedMusicPlayer/issues/30)
 
 ### Files you worked on
-- DownloadedMusicPlayer/SkeletonCode/App.js - Added settings UI and functions. Explore tab functionality and UI is yet to be added.
+- DownloadedMusicPlayer/SkeletonCode/App.js - Added settings UI. Explore tab functionality and UI is yet to be added.
 
 ### What you accomplished
 - TBA

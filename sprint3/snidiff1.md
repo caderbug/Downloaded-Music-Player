@@ -20,7 +20,7 @@ Skye Nidiffer - GH ID: nidif - Downloaded Music Player
 - Explore Tab Functionality (issue https://github.com/utk-cs340-fall23/DownloadedMusicPlayer/issues/30)
 
 ### Files you worked on
-- DownloadedMusicPlayer/SkeletonCode/App.js - Added settings UI. Explore tab functionality and UI is yet to be added.
+- DownloadedMusicPlayer/SkeletonCode/App.js - Added settings UI. Explore tab functionality and UI is still in progress.
 
 ### What you accomplished
 - Settings UI is in place, can be added upon as needed, variables and switches can be accessed within the app.

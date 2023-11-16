@@ -9,7 +9,8 @@ import {
     Trimmer,
     ImageBackground,
     Image,
-    Switch
+    Switch,
+    ScrollView,
 } from 'react-native';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
@@ -573,50 +574,68 @@ const EditorScreen = ({ navigation }) => {
     );
 };
 
-//where explore screen code goes... placeholder for now
-const ExploreScreen = ({ navigation }) => {
+//where explore screen code goes
+const ExploreScreen = ({navigation}) => {
 
-    return (
-        <View style={styles.screensize}>
-            <Text style={styles.paragraph}>
-                Welcome. This is the Explore page. More features will be added soon.
-            </Text>
+  const songjson = require('./songs.json');
+  var songlist = [];
+  //to display all song info
+  for (let i = 0; i < 100; i++) {
+    songlist.push(
+      <View key={i}>
+      <Text>#{(songjson[i].position)}</Text>
+      <Text>{(songjson[i].name)} - {(songjson[i].artist)}</Text>
+      <Text> </Text>
+      </View>
+    );
+  }
 
-            <Separator />
-
-            <View style={styles.libbtn}>
-                <Button
-                    title="Library"
-                    color="#aaaaaa"
-                    onPress={() => navigation.navigate('Library Page')}
-                />
-            </View>
-            <View style={styles.editbtn}>
-                <Button
-                    title="Editor"
-                    color="#aaaaaa"
-                    onPress={() => navigation.navigate('Editor Page')}
-                />
-            </View>
-            <View style={styles.explorebtn}>
-                <Button
-                    title="Explore"
-                    color="#aaaaaa"
-                    onPress={() => navigation.navigate('Explore Page')}
-                />
-            </View>
-     <View style={styles.setbtn}>
+  return(
+    <View style={styles.screensize}>
+    <ScrollView>
+    <Text style={{fontWeight: 'bold', fontSize: 20, margin:20, textAlign: 'center'}}>
+    Billboard Hot 100
+    </Text>
+    <Text style={{textAlign: 'center'}}>Explore some of today's hottest tracks.</Text>
+    <Separator />
+    <View style={{fontSize: 16, margin: 20, textAlign: 'center'}}>
+    {songlist}
+    </View>
+    </ScrollView>
+    <Separator />
+     <View style={styles.libbtn}>
+       <Button
+         title="Library"
+         color="#aaaaaa" 
+         onPress={() => navigation.navigate('Library Page')}
+       />
+     </View>
+     <View style={styles.editbtn}>
+        <Button
+          title="Editor"
+          color="#aaaaaa" 
+          onPress={() => navigation.navigate('Editor Page')}
+        />
+      </View>
+      <View style={styles.explorebtn}>
+        <Button
+          title="Explore"
+          color="#aaaaaa" 
+          onPress={() => navigation.navigate('Explore Page')}
+        />
+      </View>
+      <View style={styles.setbtn}>
      <Button
          title="Settings"
          color="#aaaaaa" 
          onPress={() => navigation.navigate('Settings Page')}
        />
      </View>
-        </View>
-    );
+   </View>
+  );
 }
 
-//where settings page code goes... placeholder for now
+//where settings page code goes... wip
 const SettingsScreen = ({navigation}) => {
 
   const [username, onChangeText] = useState('user');

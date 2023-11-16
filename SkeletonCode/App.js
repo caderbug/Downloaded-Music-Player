@@ -8,13 +8,15 @@ import {
     TouchableOpacity,
     Trimmer,
     ImageBackground,
-    Image
+    Image,
+    Switch
 } from 'react-native';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Audio } from 'expo-av';
+import * as FileSystem from 'expo-file-system';
 
 // Library imports
 import './Library.css';
@@ -61,9 +63,9 @@ const MusicPlayerApp = () => {
                     component={ExploreScreen}
                 />
 
-                <Stack.Screen
-                    name="Account Page"
-                    component={AccountScreen}
+                <Stack.Screen 
+                  name="Settings Page" 
+                  component={SettingsScreen} 
                 />
 
             </Stack.Navigator>
@@ -455,13 +457,13 @@ const LibraryScreen = ({ navigation }) => {
                     onPress={() => navigation.navigate('Explore Page')}
                 />
             </View>
-            <View style={styles.accbtn}>
-                <Button
-                    title="Account"
-                    color="#aaaaaa"
-                    onPress={() => navigation.navigate('Account Page')}
-                />
-            </View>
+     <View style={styles.setbtn}>
+     <Button
+         title="Settings"
+         color="#aaaaaa" 
+         onPress={() => navigation.navigate('Settings Page')}
+       />
+     </View>
         </View>
     );
 };
@@ -560,13 +562,13 @@ const EditorScreen = ({ navigation }) => {
                     onPress={() => navigation.navigate('Explore Page')}
                 />
             </View>
-            <View style={styles.accbtn}>
-                <Button
-                    title="Account"
-                    color="#aaaaaa"
-                    onPress={() => navigation.navigate('Account Page')}
-                />
-            </View>
+     <View style={styles.setbtn}>
+     <Button
+         title="Settings"
+         color="#aaaaaa" 
+         onPress={() => navigation.navigate('Settings Page')}
+       />
+     </View>
         </View>
     );
 };
@@ -603,73 +605,123 @@ const ExploreScreen = ({ navigation }) => {
                     onPress={() => navigation.navigate('Explore Page')}
                 />
             </View>
-            <View style={styles.accbtn}>
-                <Button
-                    title="Account"
-                    color="#aaaaaa"
-                    onPress={() => navigation.navigate('Account Page')}
-                />
-            </View>
+     <View style={styles.setbtn}>
+     <Button
+         title="Settings"
+         color="#aaaaaa" 
+         onPress={() => navigation.navigate('Settings Page')}
+       />
+     </View>
         </View>
     );
 }
 
-//where account page code goes... placeholder for now
-const AccountScreen = ({ navigation }) => {
+//where settings page code goes... placeholder for now
+const SettingsScreen = ({navigation}) => {
 
-    const [username, onChangeText] = useState('user');
+  const [username, onChangeText] = useState('user');
+  const [setting1, setIsEnabled1] = useState(false);
+  const [setting2, setIsEnabled2] = useState(false);
+  const [setting3, setIsEnabled3] = useState(false);
+  const toggleSwitch1 = () => setIsEnabled1(previousState => !previousState);
+  const toggleSwitch2 = () => setIsEnabled2(previousState => !previousState);
+  const toggleSwitch3 = () => setIsEnabled3(previousState => !previousState);
 
-    return (
-        <View style={styles.screensize}>
-            <Text style={styles.paragraph}>
-                Welcome. This is the Account page. More features will be added soon.
-            </Text>
+  //testing file stuff
+  /*
+  const filename = FileSystem.documentDirectory + "text.txt";
+  FileSystem.writeAsStringAsync(filename, "Hello World")
+  .then(() => {
+    console.log('file content:', FileSystem.readAsStringAsync(filename))
+  });
 
-            <Separator />
-            <Text style={styles.paragraph}>
-                Input a username.
-            </Text>
-            <TextInput
-                style={styles.input}
-                onChangeText={onChangeText}
-                value={username}
-            />
-            <Text style={styles.paragraph}>
-                Hello, {username}.
-            </Text>
-            <Separator />
 
-            <View style={styles.libbtn}>
-                <Button
-                    title="Library"
-                    color="#aaaaaa"
-                    onPress={() => navigation.navigate('Library Page')}
-                />
-            </View>
-            <View style={styles.editbtn}>
-                <Button
-                    title="Editor"
-                    color="#aaaaaa"
-                    onPress={() => navigation.navigate('Editor Page')}
-                />
-            </View>
-            <View style={styles.explorebtn}>
-                <Button
-                    title="Explore"
-                    color="#aaaaaa"
-                    onPress={() => navigation.navigate('Explore Page')}
-                />
-            </View>
-            <View style={styles.accbtn}>
-                <Button
-                    title="Account"
-                    color="#aaaaaa"
-                    onPress={() => navigation.navigate('Account Page')}
-                />
-            </View>
-        </View>
+FileSystem.downloadAsync(
+  'http://techslides.com/demos/sample-videos/small.mp4',
+  FileSystem.documentDirectory + 'small.mp4'
+)
+  .then(({ uri }) => {
+    console.log('Finished downloading to ', uri);
+  });
+  */
 
-    );
+
+  return(
+    <View style={styles.screensize}>
+    <Separator />
+    <Text style={styles.paragraph}>
+      Username is {username}.
+    </Text>
+     <TextInput
+       style={styles.input}
+       onChangeText={onChangeText}
+       value={username}
+     />
+    <Separator />
+
+    <View  style={styles.paragraph}>
+    <Text>Setting 1:</Text>
+    <Switch
+        trackColor={{false: '#767577', true: '#a6a6a6'}}
+        thumbColor={setting1 ? '#dbdbdb' : '#767577'}
+        onValueChange={toggleSwitch1}
+        value={setting1}
+      />
+    </View>
+    <Separator />
+    <View style={styles.paragraph}>
+    <Text>Setting 2:</Text>
+    <Switch
+        trackColor={{false: '#767577', true: '#a6a6a6'}}
+        thumbColor={setting2 ? '#dbdbdb' : '#767577'}
+        onValueChange={toggleSwitch2}
+        value={setting2}
+      />
+    </View>
+    <Separator />
+    <View style={styles.paragraph}>
+    <Text>Setting 3:</Text>
+    <Switch
+        trackColor={{false: '#767577', true: '#a6a6a6'}}
+        thumbColor={setting3 ? '#dbdbdb' : '#767577'}
+        onValueChange={toggleSwitch3}
+        value={setting3}
+      />
+    </View>
+
+    <Separator />
+
+     <View style={styles.libbtn}>
+       <Button
+         title="Library"
+         color="#aaaaaa" 
+         onPress={() => navigation.navigate('Library Page')}
+       />
+     </View>
+     <View style={styles.editbtn}>
+        <Button
+          title="Editor"
+          color="#aaaaaa" 
+          onPress={() => navigation.navigate('Editor Page')}
+        />
+      </View>
+      <View style={styles.explorebtn}>
+        <Button
+          title="Explore"
+          color="#aaaaaa" 
+          onPress={() => navigation.navigate('Explore Page')}
+        />
+      </View>
+     <View style={styles.setbtn}>
+     <Button
+         title="Settings"
+         color="#aaaaaa" 
+         onPress={() => navigation.navigate('Settings Page')}
+       />
+     </View>
+   </View>
+
+  );
 }
 
 //styles go here...
@@ -724,7 +776,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
     },
-    accbtn: {
+    setbtn: {
         right: 0,
         left: 307,
         width: "26%",

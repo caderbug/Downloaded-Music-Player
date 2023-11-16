@@ -3,19 +3,24 @@
 Skye Nidiffer - GH ID: nidif - Downloaded Music Player
 
 ### What you planned to do
-(Give a short bulleted list of the items you planned to do for this sprint. Include the github issue number and link to the issue)
+- Settings Tab UI (issue https://github.com/utk-cs340-fall23/DownloadedMusicPlayer/issues/21)
+- Settings Tab Functionality (issue https://github.com/utk-cs340-fall23/DownloadedMusicPlayer/issues/22)
+- Explore Tab Functionality (issue https://github.com/utk-cs340-fall23/DownloadedMusicPlayer/issues/30)
 
 ### What you did not do
-(Give a short bulleted list of the items that you planned to do, but did not accomplish)
+- Explore tab is not yet fully functional, as I am still learning and working out how to do the webscraping and how to call it from the app when the explore page is loaded. I will work on this more in Sprint 4. Using Python for the web scraping right now.
+- Settings tab UI and functions are just basic right now, but they are saved to a file for the app to read/write with react-native-fs. Additional settings can be added as needed.
 
 ### What problems you encountered
-(List the problems you encountered)
+- Learning how to do web scraping and calling Python scripts from inside the app is taking some time, but there are resources available to learn from.
 
 ### Issues you worked on
-(List the specific github issues that you worked on with a link to the issue (ex: [#1](https://github.com/utk-cs340-fall22/ClassInfo/issues/1) Sample Issue)
+- Settings Tab UI (issue https://github.com/utk-cs340-fall23/DownloadedMusicPlayer/issues/21)
+- Settings Tab Functionality (issue https://github.com/utk-cs340-fall23/DownloadedMusicPlayer/issues/22)
+- Explore Tab Functionality (issue https://github.com/utk-cs340-fall23/DownloadedMusicPlayer/issues/30)
 
 ### Files you worked on
-(Give a bulleted list of the files in your github repo that you worked on. Give the full pathname.)
+- DownloadedMusicPlayer/SkeletonCode/App.js - Added settings UI and functions. Explore tab functionality and UI is yet to be added.
 
 ### What you accomplished
-(Give a description of the features you added or tasks you accomplished. Provide some detail here. This section will be a little longer than the bulleted lists above) 
+- TBA

@@ -6,7 +6,6 @@ import {
     StyleSheet,
     TextInput,
     TouchableOpacity,
-    Trimmer,
     ImageBackground,
     Image,
     Switch,
@@ -18,6 +17,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
+import Trimmer from 'react-native-trimmer';
+import Editor from './Editor'
 
 // Library imports
 import './Library.css';
@@ -471,107 +472,29 @@ const LibraryScreen = ({ navigation }) => {
 
 const EditorScreen = ({ navigation }) => {
     // Functionality
-    // Define initial state variables
-    const initialLeftHandlePosition = 0;
-    const initialRightHandlePosition = 36000;
-    const scrubInterval = 10;
-
-    // Use the useState hook to manage state
-    const [playing, setPlaying] = useState(false);
-    const [trimmerLeftHandlePosition, setTrimmerLeftHandlePosition] = useState(initialLeftHandlePosition);
-    const [trimmerRightHandlePosition, setTrimmerRightHandlePosition] = useState(initialRightHandlePosition);
-    const [scrubberPosition, setScrubberPosition] = useState(1000);
-    const [scrubberInterval, setScrubberInterval] = useState(null);
-
-    // Function to start playing
-    const play = () => {
-        setPlaying(true);
-
-        // Update position of scrubber
-        const interval = setInterval(() => {
-            setScrubberPosition((prevPosition) => prevPosition + scrubInterval);
-        }, scrubInterval);
-
-        setScrubberInterval(interval);
-    };
-
-    // Function to pause
-    const pause = () => {
-        clearInterval(scrubberInterval);
-
-        // Stop position of scrubber
-        setPlaying(false);
-    };
-
-    // Function to handle change of trimming size
-    const onHandleChange = ({ leftPosition, rightPosition }) => {
-        setTrimmerLeftHandlePosition(leftPosition);
-        setTrimmerRightHandlePosition(rightPosition);
-    };
-
-    // Function to keep scrubber at position it was left off
-    const onScrubbingComplete = (newValue) => {
-        setPlaying(false);
-        setScrubberPosition(newValue);
-    };
-
-    // User Interface
-    return (
-        <View style={styles.screensize}>
-            <View>
-                <Trimmer
-                    onHandleChange={onHandleChange}
-                    totalDuration={totalDuration} // Make sure to define totalDuration
-                    trimmerLeftHandlePosition={trimmerLeftHandlePosition}
-                    trimmerRightHandlePosition={trimmerRightHandlePosition}
-                    minimumTrimDuration={minimumTrimDuration} // Make sure to define minimumTrimDuration
-                    maxTrimDuration={maxTrimDuration} // Make sure to define maxTrimDuration
-                    scaleInOnInit={false}
-                    tintColor="blue"
-                    markerColor="grey"
-                    trackBackgroundColor="powderblue"
-                    trackBorderColor="blue"
-                    scrubberColor="black"
-                    scrubberPosition={scrubberPosition}
-                    onScrubbingComplete={onScrubbingComplete}
-                />
-                <Button title="Pause" color="darkblue" onPress={pause} />
-                <Button title="Play" color="darkblue" onPress={play} />
-                <Button title="Cut" color="darkblue" onPress={play} />
-            </View>
-
-            <Separator />
-
-            <View style={styles.libbtn}>
-                <Button
-                    title="Library"
-                    color="#aaaaaa"
-                    onPress={() => navigation.navigate('ibrary Page')}
-                />
-            </View>
-            <View style={styles.editbtn}>
-                <Button
-                    title="Editor"
-                    color="#aaaaaa"
-                    onPress={() => navigation.navigate('Editor Page')}
-                />
-            </View>
-            <View style={styles.explorebtn}>
-                <Button
-                    title="Explore"
-                    color="#aaaaaa"
-                    onPress={() => navigation.navigate('Explore Page')}
-                />
-            </View>
-     <View style={styles.setbtn}>
-     <Button
-         title="Settings"
-         color="#aaaaaa" 
-         onPress={() => navigation.navigate('Settings Page')}
-       />
-     </View>
-        </View>
-    );
+   const customShare = async () => {
+     Share.share(
+      {
+        title: "shared",
+        message: "some message",
+      }
+     );
+  };
+    
+  return (    
+    <View style={styles.container}>
+      <View>
+        <Text style={styles.title}> 
+          AUDIO EDITOR
+        </Text>
+        <Text style={styles.shareButton} color="black" onPress={customShare} /*SHARE BUTTON*/> 
+          SHARE
+        </Text>
+        <Editor /* AUDIO EDITOR PAGE */ />
+      </View>
+     
+    </View>
+  );
 };
 
 //where explore screen code goes
@@ -826,6 +749,23 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         paddingTop: 20,
         paddingBottom: 20,
+    },
+    audioTitle: {
+        left: 90,
+        paddingTop: 40,
+        color: 'blue',
+        fontSize: 30,
+        fontWeight: 'bold',
+    },
+    
+    shareButton: {
+        left: 310,
+        top: -20,
+        alignContent: 'center',
+        alignItems: 'center',
+        flex: 1,
+        fontSize: 10,
+        fontWeight: 'bold',
     }
 });
 

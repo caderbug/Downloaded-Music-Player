@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './play.png';
 import add from './add.png';
+import remove from './remove.png';
 import './Library.css';
 import { clear } from '@testing-library/user-event/dist/clear';
 
@@ -9,6 +10,7 @@ export default function Library() {
 	var playlist_open = false;
 	var change_open = false;
 	var playlist_filter = false;
+	var current_playlist = -1;
 	var persistent_list = {};
 	var current_sort = "Title";
 	var track_list = {};
@@ -187,11 +189,21 @@ export default function Library() {
 			play_button.addEventListener("click", () => play(i));
 
 			const playlist_image = document.createElement("img");
-			playlist_image.setAttribute("src", add)
+			if(playlist_filter){
+				playlist_image.setAttribute("src", remove)
+			}else{
+				playlist_image.setAttribute("src", add)
+			}
+			
 			playlist_image.setAttribute("class", "playlist_image");
 			playlist_button.appendChild(playlist_image);
 			playlist_button.addEventListener("click", () => {
-				fill_playlist("add", track_list[i].Path);
+				if(playlist_filter){
+					remove_song(current_playlist, track_list[i].Path);
+					display_playlist(current_playlist);
+				}else{
+					fill_playlist("add", track_list[i].Path);
+				}
 			});
 
 			// adds button section to row
@@ -231,10 +243,10 @@ export default function Library() {
 
 		const sort_text = document.getElementById("sort_text");
 		sort_text.textContent = "Sorting by " + current_sort;
+		undo_playlist();
 		apply_changes("sort", current_sort);
 		clear_songs();
 		display_songs();
-		undo_playlist();
 	}
 
 	function clear_filter(){
@@ -247,20 +259,21 @@ export default function Library() {
 	function filter_chosen(by, name){
 		clear_filter();
 		filter_open = false;
+		undo_playlist();
 		apply_changes("filter", by, name);
 		clear_songs();
 		display_songs();
-		undo_playlist();
 	}
 
 	function add_song(playlist_index, path){
-		
 		var new_index = playlists[playlist_index].Order.length;
-		console.log("Add " + path + " at " + new_index);
 		playlists[playlist_index].Order[new_index] = path;
-		for(let i = 0; i < playlists[playlist_index].Order.length; i++){
-			console.log(playlists[playlist_index].Order[i]);
-		}
+		clear_filter();
+	}
+
+	function remove_song(playlist_index, path){
+		var val = playlists[playlist_index].Order.indexOf(path);
+		playlists[playlist_index].Order.splice(val, 1);
 	}
 
 	function fill_filter(by){
@@ -329,11 +342,13 @@ export default function Library() {
 			list[i] = persistent_list[track_index];
 		}
 		track_list = list;
-		clear_songs();
-		display_songs();
-		clear_filter();
 		playlist_open = false;
 		playlist_filter = true;
+		current_playlist = index;
+		clear_songs();
+		sort(track_list, "Title");
+		display_songs();
+		clear_filter();
 		document.getElementById("playlist_text").textContent = "Back";
 		document.getElementById("sort_text").textContent = "Sorting by Title";
 		current_sort = "Title";
@@ -376,15 +391,16 @@ export default function Library() {
 	function undo_playlist(){
 		document.getElementById("playlist_text").textContent = "Playlists";
 		playlist_filter = false;
+		current_playlist = -1;
 	}
 
 	function playlist_clicked(){
 		const filter = document.getElementById("filter");
 		if(playlist_filter){
+			undo_playlist();
 			apply_changes("sort", current_sort);
 			clear_songs();
 			display_songs();
-			undo_playlist();
 		}else if(playlist_open){
 			clear_filter();
 			playlist_open = false;

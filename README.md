@@ -22,4 +22,4 @@ various additional features.
      * npx expo start
 
 ### License:
-License here. [License](https://github.com/utk-cs340-fall23/DownloadedMusicPlayer/blob/main/LICENSE)
+License [here](https://github.com/utk-cs340-fall23/DownloadedMusicPlayer/blob/main/LICENSE) .

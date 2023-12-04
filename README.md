@@ -11,3 +11,15 @@ various additional features.
 - Peyton Moore - caderbug
 - Skye Nidiffer - nidif
 - William Quesinberry - williamques
+
+
+### Installation & Starting: 
+1. Need to have/create an expo account along with having the latest version of Expo Go installed (Expo Go Docs)[https://docs.expo.dev/get-started/expo-go/]
+2. clone the repo
+3. To start the server, run:
+     * npm expo login
+     * npm install
+     * npx expo start
+
+### License:
+License here. (License)[https://github.com/utk-cs340-fall23/DownloadedMusicPlayer/blob/main/LICENSE]

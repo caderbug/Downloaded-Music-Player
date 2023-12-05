@@ -1,5 +1,5 @@
 # Downloaded Music Player
-![DMP Logo](https://lh3.googleusercontent.com/u/0/drive-viewer/AK7aPaAveWEBhN3aNDC0jrQOiSDXOv0txni6dStR15QpNA6ru-wOnTcfaTO061Kzu5CkTmZDe5T0Kif4HWM3C1nnaeCmOXNS=w1920-h933)
+![DMP Logo](https://lh3.googleusercontent.com/u/0/drive-viewer/AK7aPaAveWEBhN3aNDC0jrQOiSDXOv0txni6dStR15QpNA6ru-wOnTcfaTO061Kzu5CkTmZDe5T0Kif4HWM3C1nnaeCmOXNS=w600-h933)
 ### Project Description
 - A phone app that is able to play music that is locally
 downloaded to a phone. It will contain features commonly seen in a typical music player. The common features that it includes is a music player, library function, audio editor, and an explore page.

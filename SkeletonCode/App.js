@@ -477,98 +477,130 @@ const LibraryScreen = ({ navigation }) => {
     );
 };
 
-const EditorScreen = ({ navigation }) => {
-    // Functionality
-    const customShare = async () => {
-        Share.share(
-            {
-                title: "shared",
-                message: "some message",
-            }
-        );
-    };
+const EditorScreen = ({navigation}) => {
 
-    return (
-        <View style={styles.container}>
-            <View>
-                <Text style={styles.title}>
-                    AUDIO EDITOR
-                </Text>
-                <Text style={styles.shareButton} color="black" onPress={customShare} /*SHARE BUTTON*/>
-                    SHARE
-                </Text>
-                <Editor /* AUDIO EDITOR PAGE */ />
-            </View>
-
-        </View>
-    );
-};
-
-//where explore screen code goes
-const ExploreScreen = ({ navigation }) => {
-
-    const songjson = require('./songs.json');
-    var songlist = [];
-    //to display all song info
-    for (let i = 0; i < 100; i++) {
-        songlist.push(
-            <View key={i}>
-                <Text>#{(songjson[i].position)}</Text>
-                <Text>{(songjson[i].name)} - {(songjson[i].artist)}</Text>
-                <Text> </Text>
-            </View>
-        );
+  // Functionality
+  const customShare = async () => {
+    Share.share(
+    {
+      title: "shared",
+      message: "some message",
     }
-
-    return (
-        <View style={styles.screensize}>
-            <ScrollView>
-                <Text style={{ fontWeight: 'bold', fontSize: 20, margin: 20, textAlign: 'center' }}>
-                    Billboard Hot 100
-                </Text>
-                <Text style={{ textAlign: 'center' }}>Explore some of today's hottest tracks.</Text>
-                <Separator />
-                <View style={{ fontSize: 16, margin: 20, textAlign: 'center' }}>
-                    {songlist}
-                </View>
-            </ScrollView>
-            <Separator />
-            <View style={styles.libbtn}>
-                <Button
-                    title="Library"
-                    color="#aaaaaa"
-                    onPress={() => navigation.navigate('Library Page')}
-                />
-            </View>
-            <View style={styles.editbtn}>
-                <Button
-                    title="Editor"
-                    color="#aaaaaa"
-                    onPress={() => navigation.navigate('Editor Page')}
-                />
-            </View>
-            <View style={styles.explorebtn}>
-                <Button
-                    title="Explore"
-                    color="#aaaaaa"
-                    onPress={() => navigation.navigate('Explore Page')}
-                />
-            </View>
-            <View style={styles.setbtn}>
-                <Button
-                    title="Settings"
-                    color="#aaaaaa"
-                    onPress={() => navigation.navigate('Settings Page')}
-                />
-            </View>
-        </View>
     );
+  };
+
+  return(
+    <View style={styles.screensize}>
+        <Text style={styles.audioTitle}> 
+          AUDIO EDITOR
+        </Text>
+        <Text style={styles.shareButton} color="black" onPress={customShare} /*SHARE BUTTON*/>
+          SHARE
+        </Text>
+        <Editor /* AUDIO EDITOR PAGE */ />
+     
+    <Separator />
+
+
+     <View style={styles.libbtn}>
+       <Button
+         title="Library"
+         color="#aaaaaa" 
+         onPress={() => navigation.navigate('Library Page')}
+       />
+     </View>
+     <View style={styles.editbtn}>
+        <Button
+          title="Editor"
+          color="#aaaaaa" 
+          onPress={() => navigation.navigate('Editor Page')}
+        />
+      </View>
+      <View style={styles.explorebtn}>
+        <Button
+          title="Explore"
+          color="#aaaaaa" 
+          onPress={() => navigation.navigate('Explore Page')}
+        />
+      </View>
+      <View style={styles.setbtn}>
+       <Button
+         title="Settings"
+         color="#aaaaaa" 
+         onPress={() => navigation.navigate('Settings Page')}
+       />
+     </View>
+   </View>
+  );
+}
+
+const ExploreScreen = ({navigation}) => {
+  const songjson = require('./songs.json');
+
+  var songlist = [];
+  
+  for (let i = 0; i < 100; i++) {
+    songlist.push(
+      <View key={i}>
+      <Text style={{fontWeight: 'bold'}}>#{(songjson[i].position)}</Text>
+      <Text>{(songjson[i].name)} - {(songjson[i].artist)}</Text>
+      <Text> </Text>
+      </View>
+    );
+  }
+
+
+  return(
+    <View style={styles.screensize}>
+    <ScrollView>
+    <Text style={{fontWeight: 'bold', fontSize: 20, margin:20, textAlign: 'center'}}>
+    Billboard Hot 100
+    </Text>
+    <Text style={{textAlign: 'center'}}>Explore some of today's hottest tracks.</Text>
+    <Separator />
+    <View style={{fontSize: 16, margin: 20, textAlign: 'center'}}>
+    {songlist}
+    </View>
+    </ScrollView>
+    <Separator />
+     <View style={styles.libbtn}>
+       <Button
+         title="Library"
+         color="#aaaaaa" 
+         onPress={() => navigation.navigate('Library Page')}
+       />
+     </View>
+     <View style={styles.editbtn}>
+        <Button
+          title="Editor"
+          color="#aaaaaa" 
+          onPress={() => navigation.navigate('Editor Page')}
+        />
+      </View>
+      <View style={styles.explorebtn}>
+        <Button
+          title="Explore"
+          color="#aaaaaa" 
+          onPress={() => navigation.navigate('Explore Page')}
+        />
+      </View>
+      <View style={styles.setbtn}>
+     <Button
+         title="Settings"
+         color="#aaaaaa" 
+         onPress={() => navigation.navigate('Settings Page')}
+       />
+     </View>
+   </View>
+  );
 }
 
 //where settings page code goes... wip
 const SettingsScreen = ({ navigation }) => {
     // State Information
     const [username, onChangeText] = useState('user');
+    const [folder, onChangeText2] = useState(' ');
+    const [mp3, onChangeText3] = useState(' ');
     const [setting1, setIsEnabled1] = useState(false);
     const [setting2, setIsEnabled2] = useState(false);
     const [setting3, setIsEnabled3] = useState(false);
@@ -612,21 +644,31 @@ const SettingsScreen = ({ navigation }) => {
             <Text style={styles.paragraph}>
                 Username is {username}.
             </Text>
+            
             <TextInput
                 style={styles.input}
                 onChangeText={onChangeText}
                 value={username}
             />
+                <Separator />
             {/* Folder Button */}
             <View>
                 <Button title="Add Folder" color="#aaaaaa" onPress={handleFolderButtonPress} />
             </View>
-
+            <TextInput
+                style={styles.input}
+                onChangeText={onChangeText2}
+                value={folder}
+            />
             {/* Search Button */}
             <View>
                 <Button title="Search MP3s" color="#aaaaaa" onPress={handleSearchButtonPress} />
             </View>
-
+            <TextInput
+                style={styles.input}
+                onChangeText={onChangeText3}
+                value={mp3}
+            />
             {/* Export Button */}
             <View>
                 <Button title="Export Preferences" color="#aaaaaa" onPress={handleExportButtonPress} />
@@ -636,174 +678,142 @@ const SettingsScreen = ({ navigation }) => {
             <View>
                 <Button title="Import Preferences" color="#aaaaaa" onPress={handleImportButtonPress} />
             </View>
-            <Separator />
+          
+    <Separator />
 
-            <View style={styles.paragraph}>
-                <Text>Setting 1:</Text>
-                <Switch
-                    trackColor={{ false: '#767577', true: '#a6a6a6' }}
-                    thumbColor={setting1 ? '#dbdbdb' : '#767577'}
-                    onValueChange={toggleSwitch1}
-                    value={setting1}
-                />
-            </View>
-            <Separator />
-            <View style={styles.paragraph}>
-                <Text>Setting 2:</Text>
-                <Switch
-                    trackColor={{ false: '#767577', true: '#a6a6a6' }}
-                    thumbColor={setting2 ? '#dbdbdb' : '#767577'}
-                    onValueChange={toggleSwitch2}
-                    value={setting2}
-                />
-            </View>
-            <Separator />
-            <View style={styles.paragraph}>
-                <Text>Setting 3:</Text>
-                <Switch
-                    trackColor={{ false: '#767577', true: '#a6a6a6' }}
-                    thumbColor={setting3 ? '#dbdbdb' : '#767577'}
-                    onValueChange={toggleSwitch3}
-                    value={setting3}
-                />
-            </View>
+     <View style={styles.libbtn}>
+       <Button
+         title="Library"
+         color="#aaaaaa" 
+         onPress={() => navigation.navigate('Library Page')}
+       />
+     </View>
+     <View style={styles.editbtn}>
+        <Button
+          title="Editor"
+          color="#aaaaaa" 
+          onPress={() => navigation.navigate('Editor Page')}
+        />
+      </View>
+      <View style={styles.explorebtn}>
+        <Button
+          title="Explore"
+          color="#aaaaaa" 
+          onPress={() => navigation.navigate('Explore Page')}
+        />
+      </View>
+     <View style={styles.setbtn}>
+     <Button
+         title="Settings"
+         color="#aaaaaa" 
+         onPress={() => navigation.navigate('Settings Page')}
+       />
+     </View>
+   </View>
 
-            <Separator />
-
-            <View style={styles.libbtn}>
-                <Button
-                    title="Library"
-                    color="#aaaaaa"
-                    onPress={() => navigation.navigate('Library Page')}
-                />
-            </View>
-            <View style={styles.editbtn}>
-                <Button
-                    title="Editor"
-                    color="#aaaaaa"
-                    onPress={() => navigation.navigate('Editor Page')}
-                />
-            </View>
-            <View style={styles.explorebtn}>
-                <Button
-                    title="Explore"
-                    color="#aaaaaa"
-                    onPress={() => navigation.navigate('Explore Page')}
-                />
-            </View>
-            <View style={styles.setbtn}>
-                <Button
-                    title="Settings"
-                    color="#aaaaaa"
-                    onPress={() => navigation.navigate('Settings Page')}
-                />
-            </View>
-        </View>
-
-    );
+  );
 }
 
 //styles go here...
 const styles = StyleSheet.create({
-    paragraph: {
-        margin: 24,
-        fontSize: 14,
-        textAlign: 'center',
-    },
-    logo: {
-        paddingTop: 200,
-        height: 400,
-        fontWeight: 'bold',
-        fontSize: 40,
-        textAlign: 'center',
-    },
-    screensize: {
-        height: 755,
-    },
-    input: {
-        borderWidth: 1,
-        padding: 10,
-        margin: 12,
-    },
-    playbtn: {
-        width: 50,
-        height: 50,
-    },
-    separator: {
-        marginVertical: 8,
-        borderBottomColor: '#737373',
-        borderBottomWidth: StyleSheet.hairlineWidth,
-    },
-    libbtn: {
-        right: 300,
-        left: 0,
-        width: "26%",
-        position: 'absolute',
-        bottom: 0,
-    },
-    editbtn: {
-        right: 200,
-        left: 105,
-        width: "26%",
-        position: 'absolute',
-        bottom: 0,
-    },
-    explorebtn: {
-        right: 100,
-        left: 206,
-        width: "26%",
-        position: 'absolute',
-        bottom: 0,
-    },
-    setbtn: {
-        right: 0,
-        left: 307,
-        width: "26%",
-        position: 'absolute',
-        bottom: 0,
-    },
-    title: {
-        opacity: 0,
-    },
-    trackplayer: {
-        flex: 1,
-        alignItems: "center",
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        borderTopWidth: 1,
-        borderBottomWidth: 1,
-        borderColor: '#737373',
-        width: '100%',
-        fontSize: 24,
-        position: "absolute",
-        bottom: 37
-    },
-    container: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        paddingTop: 20,
-        paddingBottom: 20,
-    },
-    audioTitle: {
-        left: 90,
-        paddingTop: 40,
-        color: 'blue',
-        fontSize: 30,
-        fontWeight: 'bold',
-    },
-
-    shareButton: {
-        left: 310,
-        top: -20,
-        alignContent: 'center',
-        alignItems: 'center',
-        flex: 1,
-        fontSize: 10,
-        fontWeight: 'bold',
-    }
+  paragraph: {
+    margin: 24,
+    fontSize: 14,
+    textAlign: 'center',
+  },
+  logo: {
+    paddingTop: 200,
+    height: 400,
+    fontWeight: 'bold',
+    fontSize: 40,
+    textAlign: 'center',
+  },
+  screensize:{
+    height: 755,
+  },
+  input: {
+    borderWidth: 1,
+    padding: 10,
+    margin: 12,
+  },
+  playbtn: {
+    width: 50,
+    height: 50,
+  },
+  separator: {
+    marginVertical: 8,
+    borderBottomColor: '#737373',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  libbtn: {
+    right: 300,
+    left: 0,
+    width: "26%",
+    position: 'absolute',
+    bottom: 0,
+  },
+  editbtn: {
+    right: 200,
+    left: 105,
+    width: "26%",
+    position: 'absolute',
+    bottom: 0,
+  },
+  explorebtn: {
+    right: 100,
+    left: 206,
+    width: "26%",
+    position: 'absolute',
+    bottom: 0,
+  },
+  setbtn: {
+    right: 0,
+    left: 307,
+    width: "26%",
+    position: 'absolute',
+    bottom: 0,
+  },
+  title: {
+    opacity: 0,
+  },
+  trackplayer: {
+    flex: 1,
+    alignItems: "center",
+    flexDirection: 'row', 
+    flexWrap: 'wrap',
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: '#737373',
+    width: '100%',
+    fontSize: 24,
+    position: "absolute",
+    bottom: 37
+  },
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: 'row', 
+    flexWrap: 'wrap',
+    paddingTop: 20,
+    paddingBottom: 20,
+  },
+  audioTitle: {
+    left: 90,
+    paddingTop: 40,
+    marginRight: 40,
+    color: 'blue',
+    fontSize: 30,
+    fontWeight: 'bold',
+}, 
+  shareButton: {
+      left: 330,
+      top: -20,
+      alignContent: 'center',
+      alignItems: 'center',
+      fontSize: 10,
+      fontWeight: 'bold',
+  }
 });
 
 // Settings Screen Functions
